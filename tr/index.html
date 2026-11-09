@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="tr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amr Abdelbari — İHA simülasyonu, radar ve kablosuz sistemler</title>
+<meta name="description" content="Dr. Öğr. Üyesi Amr Abdelbari — Yakın Doğu Üniversitesi Bilişim Sistemleri Mühendisliği Bölüm Başkanı, Lefkoşa, Kıbrıs. İHA yarışma simülasyonu, pasif radar, NOMA/MIMO kablosuz haberleşme araştırmaları.">
+<meta property="og:title" content="Amr Abdelbari — İHA simülasyonu, radar ve kablosuz sistemler">
+<meta property="og:description" content="Sanal İHA Angajman Arenası'nın geliştiricisi: ArduPilot SITL, otomatik hakem motoru, 100 takım ölçeği, radar ve EH ligi.">
+<meta property="og:image" content="https://amrabdelbari.github.io/assets/photo.jpg">
+<meta property="og:url" content="https://amrabdelbari.github.io/tr/">
+<meta name="theme-color" content="#141413">
+<link rel="canonical" href="https://amrabdelbari.github.io/tr/">
+<link rel="alternate" hreflang="en" href="https://amrabdelbari.github.io/">
+<link rel="alternate" hreflang="ar" href="https://amrabdelbari.github.io/ar/">
+<link rel="alternate" hreflang="tr" href="https://amrabdelbari.github.io/tr/">
+<link rel="alternate" hreflang="x-default" href="https://amrabdelbari.github.io/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232f6fde'/%3E%3Cpath d='M16 6 L19 15 L27 17 L19 19 L16 26 L13 19 L5 17 L13 15Z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <b>Amr Abdelbari</b>
+    <span class="pill good opt-pill" title="Robotik, İHA simülasyonu ve savunma yazılımı alanlarındaki pozisyonlara açık">● iş tekliflerine açık</span>
+    <nav>
+      <a href="#arena-project" class="opt">İHA Arenası</a>
+      <a href="#projects" class="opt">Projeler</a>
+      <a href="#research">Araştırma</a>
+      <a href="#about" class="opt">Hakkımda</a>
+      <a href="#contact" class="opt">İletişim</a>
+    </nav>
+    <div class="langs" aria-label="Language"><a href="../" hreflang="en" lang="en">EN</a><a href="../ar/" hreflang="ar" lang="ar">عربي</a><a href="../tr/" hreflang="tr" lang="tr" aria-current="page">TR</a></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero">
+    <div>
+      <div class="who">
+        <div class="avatar" aria-hidden="true">AA<img src="../assets/photo.jpg" alt="" onerror="this.remove()"></div>
+        <div><div class="name">Dr. Öğr. Üyesi Amr Abdelbari</div><div class="kicker">Mühendis · Eğitimci · Lefkoşa, Kıbrıs</div></div>
+      </div>
+      <h1>Kendi kendine <span>uçan, algılayan ve puanlayan</span> sistemler geliştiriyorum.</h1>
+      <p class="lede">Elektrik mühendisliği kökenli bir Dr. Öğretim Üyesi ve Yakın Doğu Üniversitesi'nde <strong>Bilişim Sistemleri Mühendisliği Bölüm Başkanı</strong>yım. Gerçek otopilotlar üzerinde çalışan <strong>İHA yarışma simülatörleri</strong>, SDR ve FPGA donanımıyla <strong>pasif radar</strong> geliştiriyor; <strong>NOMA / MIMO</strong> kablosuz bağlantıları üzerine araştırma yapıyorum.</p>
+      <div class="cta">
+        <a class="btn primary" href="#arena-project">İHA Arenası'nı incele →</a>
+        <a class="btn" href="#research">Yayınlar</a>
+        <a class="btn" href="https://scholar.google.com/citations?user=TgjgGgoAAAAJ&amp;hl=tr" target="_blank" rel="noopener">Google Scholar ↗</a>
+        <a class="btn" href="https://www.linkedin.com/in/amr-abdelbari-935a6542/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+
+    <div class="panel" aria-label="Canlı arena simülasyonu">
+      <div class="h"><span>Arena · canlı</span><span class="pill good" id="state">ÇALIŞIYOR</span><span class="pill" id="clock">00:00</span><span class="grow"></span><span lang="en">sim-lite</span></div>
+      <canvas id="arena" dir="ltr" width="640" height="512"></canvas>
+      <div class="scoreboard" id="board" dir="ltr"></div>
+      <div id="feed" dir="ltr"></div>
+    </div>
+  </div>
+
+  <section class="block" id="arena-project">
+    <div class="sec-head"><span class="num">01</span><h2>Sanal İHA Angajman Arenası</h2><p>Ana proje · 2026</p></div>
+    <div class="flag">
+      <div class="panel">
+        <h3>Gerçek ArduPilot otopilotlarıyla koşan sanal bir Savaşan İHA yarışması.</h3>
+        <p>Sabit kanatlı İHA takımları için, TEKNOFEST Savaşan İHA formatını örnek alan bir yarışma platformu. Takımlar rakibi kameralarının vuruş alanında tutarak, QR dalış görevini tamamlayarak, cezalardan kaçınarak ve güvenli iniş yaparak puan toplar. Her uçak gerçek bir <b>ArduPlane SITL</b> otopilotudur; takımın kendi koduyla ya da <b>tarayıcıdaki 3B kokpitten</b> elle uçurulur ve <b>otomatik hakem</b> her maçı gerçek konum verisinden puanlar. İzleyiciler tek bir bağlantıdan 3B olarak takip eder.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">ArduPilot SITL</span><span class="tag">PX4</span><span class="tag">MAVLink</span><span class="tag">ROS 2</span><span class="tag">Gazebo</span><span class="tag">FastAPI / uvicorn</span><span class="tag">NumPy</span><span class="tag">WebGL cockpit</span><span class="tag">GitHub Actions</span></div>
+        <ul class="feat"><li><b>Hakem motoru</b>: kilitlenme doğrulaması (≥ 4 sn pencere, ≥ %90 alan içinde, 0,3 sn'den uzun kesinti yok), coğrafi sınır, telemetri bekçisi, asılsız iddia ve çarpışma cezaları, uyarı / dondurma / ihraç.</li><li><b>Dört kural seti</b>: standart, TEKNOFEST modu, bir savunma senaryosu ve bağımsız bir lig.</li><li><b>Lig modu</b>: savaş sisi, yer radarı, gizli SAM mevzileri, GPS ve haberleşme karıştırma, uçak üstü ECM ve sıralamaları ile 3B tekrarları yayınlayan insansız bir sezon yürütücüsü.</li><li><b>Her uçağa ait kamera görüntüleri</b> takımlara aktarılır; her kilitlenme incelemesi için kanıt klipleri kaydedilir.</li><li><b>Adil oyun</b>: takım başına anahtar, istek sınırları, sunucu tarafı zaman ve her takıma ayrı MAVLink portu.</li><li><b>Çoklu otopilot</b>: maç öncesi homologasyondan geçen ArduPilot ve PX4 uçakları, birden çok bilgisayara dağıtılmış olarak.</li></ul>
+<div class="arch">visiting team laptop                 host (Ubuntu)
+  auto_team.py / manual_team.py ──HTTP──▶  arena server: referee · scoring · dashboard
+  3D cockpit (browser)          ─MAVLink▶  ArduPlane SITL × N  (+ PX4 nodes)
+referee browser                 ──HTTP──▶  referee console: start · pause · penalise · eject
+guests                          ──/watch▶  3D live view (10 s delay)</div>
+      </div>
+      <div style="display:grid; gap:14px; align-content:start">
+        <div class="stats"><div class="stat"><b>100</b><span>takım tek maçta: son TEKNOFEST finalinin (42) yaklaşık iki katı</span></div><div class="stat"><b>2,7 ms</b><span>100 uçak için hakem döngüsü başına (9.900 kamera/hedef çiftinin tamamı), 50 ms bütçeye karşı</span></div><div class="stat"><b>~12 bin</b><span>satır Python: sunucu, hakem, örnek takımlar, betikler ve testler</span></div><div class="stat"><b>5 Hz</b><span>her takımdan telemetri; her yanıt diğer tüm uçakları içerir</span></div></div>
+        <div class="panel" style="padding:16px">
+          <div class="h">Prova sonuçları · 25 Ekim 2026</div>
+          <table><tr><th>#</th><th>Kurulum</th><th>Sonuç</th></tr><tr><td>1</td><td>İki özdeş avcı</td><td>23,7. saniyede çarpıştılar, ikisi de elendi</td></tr><tr><td>3</td><td>Avcı - devriye, 10 dk</td><td>11 geçerli kilitlenme; final skoru 135 – 3</td></tr><tr><td>4</td><td>Sınır dışına uçan - asılsız iddia eden takım</td><td>30 sn sonra / 5 asılsız iddiadan sonra ihraç</td></tr><tr><td>5</td><td>60. saniyede telemetri kesildi</td><td>5. saniyede uyarı, 30. saniyede ihraç</td></tr><tr><td>6</td><td>ArduPlane SITL, 3 koşu</td><td>Her koşuda geçerli kilitlenme; kademeli iniş, yaklaşma çarpışmalarını çözdü</td></tr></table>
+        </div>
+      </div>
+    </div>
+    <div class="lessons"><div class="panel"><h4>İlk karşılaşma en tehlikeli an</h4><p>Aynı kodla iki uçak kalkıştan sonraki 20 saniye içinde birbirine yöneldi. Takımların kilitlenme algoritmasından önce çatışma önleme kuralına ihtiyacı var.</p></div><div class="panel"><h4>Eşit uçaklar sonsuza dek döner</h4><p>Puan asimetriden gelir: daha dar dönmek için yavaşlamak (ω = g·tan φ / V), irtifayı kullanmak ya da uzaklaşıp yeniden angaje olmak.</p></div><div class="panel"><h4>Kaçış, saldırı kadar değerli</h4><p>Hareketi tahmin edilebilen bir hedef 10 dakikada 11 kez kilitlendi. Kilitlenmek −2, saldırana ise +10 puan.</p></div></div>
+  </section>
+
+  <section class="block" id="projects">
+    <div class="sec-head"><span class="num">02</span><h2>Diğer projeler</h2><p>Donanım, sinyal ve yazılım</p></div>
+    <div class="grid">
+      <div class="panel card"><div class="top"><h3>Pasif FM radar (PCL)</h3><span class="pill warn">araştırma</span></div><p>FM yayın istasyonlarını aydınlatıcı olarak kullanıp uçakları tespit eden pasif koherent konumlama sistemi. RTL-SDR alıcılar, DE10-Lite FPGA, Python'da doğrudan yol bastırmalı çapraz belirsizlik işleme ve doğrulama için ADS-B referans verisi kullanır. Sonraki adım: koherent çok kanallı dizi.</p><div class="tags"><span class="tag">SDR</span><span class="tag">FPGA</span><span class="tag">DSP</span><span class="tag">ADS-B</span></div></div><div class="panel card"><div class="top"><h3>QR Lab</h3><span class="pill good">yayında</span></div><p>Telefonlar arasında ekrandan kameraya iletişim: fountain kodlu dosya aktarımı, renk ve uzamsal çoğullama, SIC'li NOMA tarzı katmanlı yayın, gruba özel şifreli sınavlar ve uçtan uca şifreli QR sohbet (ECDH + AES-GCM). Çevrimdışı Android uygulaması olarak da sunulur ve 20'den fazla öğrenciyle sahada denendi.</p><div class="tags"><span class="tag">JavaScript</span><span class="tag">WebCrypto</span><span class="tag">Capacitor</span></div><div class="links"><a href="https://amro2021.github.io/qr-transfer/" target="_blank" rel="noopener">Aç ↗</a><a href="https://github.com/amro2021/qr-transfer" target="_blank" rel="noopener">Kod ↗</a></div></div><div class="panel card"><div class="top"><h3>MDANetwork</h3><span class="pill acc">prototip</span></div><p>Gerçek eşler arası (P2P) ağ ve sohbet sistemi: düğümler merkezi bir aktarıcı olmadan, farklı ağlar üzerinden doğrudan konuşur. Masaüstünde ve web'de çalışır; yerel bir Kotlin Android istemcisi planlanıyor.</p><div class="tags"><span class="tag">Python</span><span class="tag">P2P</span><span class="tag">NAT traversal</span></div><div class="links"><a href="https://github.com/amro2021/MDANetPro" target="_blank" rel="noopener">Kod ↗</a></div></div><div class="panel card"><div class="top"><h3>FlyDetectandTrack</h3><span class="pill ">görüntü işleme</span></div><p>Kalıcı kimliklerle canlı böcek takibi: OpenCV ile tespit, her iz için Kalman filtresi ve IoU üzerinde Macar (Hungarian) eşleştirme. Solan hareket izleri ve canlı bir HUD çizer.</p><div class="tags"><span class="tag">OpenCV</span><span class="tag">Kalman</span><span class="tag">Tracking</span></div><div class="links"><a href="https://github.com/amro2021/FlyDetectandTrack" target="_blank" rel="noopener">Kod ↗</a></div></div><div class="panel card"><div class="top"><h3>FPGA NPU (DE10-Lite)</h3><span class="pill warn">tasarımda</span></div><p>MAX 10 FPGA üzerinde Nios V soft çekirdekli, eğitim amaçlı INT8 sistolik dizi hızlandırıcısı; nicemlenmiş LeNet/MNIST çıkarımını yazılıma karşı kıyaslar.</p><div class="tags"><span class="tag">Verilog</span><span class="tag">Nios V</span><span class="tag">Nicemleme</span></div></div><div class="panel card"><div class="top"><h3>HomecareBot</h3><span class="pill ">bot</span></div><p>Açık kalp ameliyatı sonrası evde iyileşen hastaları destekleyen, belirti izleme uyarıları ve bakım rehberliği sunan bir Telegram asistanı.</p><div class="tags"><span class="tag">Python</span><span class="tag">Telegram API</span></div><div class="links"><a href="https://github.com/amro2021/HomecareBot" target="_blank" rel="noopener">Kod ↗</a></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="research">
+    <div class="sec-head"><span class="num">03</span><h2>Araştırma</h2><p>Sinyal işleme · DOA kestirimi · Massive MIMO · NOMA · 5G çizelgeleme</p></div>
+    <div class="profiles"><a class="btn" href="https://scholar.google.com/citations?user=TgjgGgoAAAAJ&amp;hl=tr" target="_blank" rel="noopener">Google Scholar ↗</a><a class="btn" href="https://www.linkedin.com/in/amr-abdelbari-935a6542/" target="_blank" rel="noopener">LinkedIn ↗</a><a class="btn" href="https://orcid.org/0000-0002-5861-7762" target="_blank" rel="noopener">ORCID ↗</a><a class="btn" href="https://aif.neu.edu.tr/staff/amr-abdelbari/" target="_blank" rel="noopener">YDÜ personel sayfası ↗</a><a class="btn" href="https://github.com/amro2021" target="_blank" rel="noopener">GitHub ↗</a></div>
+      <div class="pubgroup">Dergi makaleleri · 5</div><div class="pubs">
+      <div class="panel pub"><div class="k">2025</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1002/dac.70223" target="_blank" rel="noopener">Precoding Design for Massive MIMO Channels with Imperfect CSI Based on Supervised Dimension Reduction Method</a></h3><p><b>A. Abdelbari</b>, B. Bilgehan · <i>International Journal of Communication Systems, vol. 38, e70223</i></p><a class="doi" href="https://doi.org/10.1002/dac.70223" target="_blank" rel="noopener">doi:10.1002/dac.70223</a></div></div>
+      <div class="panel pub"><div class="k">2021</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1007/s11045-020-00757-6" target="_blank" rel="noopener">PESO: Probabilistic Evaluation of Subspaces Orthogonality for Wideband DOA Estimation</a></h3><p><b>A. Abdelbari</b>, B. Bilgehan · <i>Multidimensional Systems and Signal Processing</i></p><a class="doi" href="https://doi.org/10.1007/s11045-020-00757-6" target="_blank" rel="noopener">doi:10.1007/s11045-020-00757-6</a></div></div>
+      <div class="panel pub"><div class="k">2020</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1002/dac.4425" target="_blank" rel="noopener">A Probabilistic-Based Approach for DOA Estimation and Localization of Multiple Sources</a></h3><p><b>A. Abdelbari</b>, B. Bilgehan · <i>International Journal of Communication Systems, vol. 33, e4425</i></p><a class="doi" href="https://doi.org/10.1002/dac.4425" target="_blank" rel="noopener">doi:10.1002/dac.4425</a></div></div>
+      <div class="panel pub"><div class="k">2020</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1002/dac.4229" target="_blank" rel="noopener">Throughput Enhanced Scheduling (TES) Scheme for Ultra-Dense Networks</a></h3><p>H. Haci, <b>A. Abdelbari</b> · <i>International Journal of Communication Systems, vol. 33, e4229</i></p><a class="doi" href="https://doi.org/10.1002/dac.4229" target="_blank" rel="noopener">doi:10.1002/dac.4229</a></div></div>
+      <div class="panel pub"><div class="k">2019</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1002/dac.3968" target="_blank" rel="noopener">Fast Detection and DOA Estimation of the Unknown Wideband Signal Sources</a></h3><p>B. Bilgehan, <b>A. Abdelbari</b> · <i>International Journal of Communication Systems, vol. 32, e3968</i></p><a class="doi" href="https://doi.org/10.1002/dac.3968" target="_blank" rel="noopener">doi:10.1002/dac.3968</a></div></div>
+      </div>
+      <div class="pubgroup">Konferans bildirileri · 8</div><div class="pubs">
+      <div class="panel pub"><div class="k">2022</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1109/ISMSIT56059.2022.9932770" target="_blank" rel="noopener">MDA: Multiple Decentralized Anchors for Hiding Communication Information</a></h3><p><b>A. Abdelbari</b> · <i>ISMSIT 2022, Ankara (IEEE)</i></p><a class="doi" href="https://doi.org/10.1109/ISMSIT56059.2022.9932770" target="_blank" rel="noopener">doi:10.1109/ISMSIT56059.2022.9932770</a></div></div>
+      <div class="panel pub"><div class="k">2022</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1109/AIoTCs58181.2022.00012" target="_blank" rel="noopener">A Novel Precoding Design for Frequency-Selective Massive MIMO Channel</a></h3><p><b>A. Abdelbari</b>, B. Bilgehan · <i>AIoTCs 2022, Nicosia (IEEE), pp. 29–32</i></p><a class="doi" href="https://doi.org/10.1109/AIoTCs58181.2022.00012" target="_blank" rel="noopener">doi:10.1109/AIoTCs58181.2022.00012</a></div></div>
+      <div class="panel pub"><div class="k">2020</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1109/ICECCE49384.2020.9179306" target="_blank" rel="noopener">A Novel DOA Estimation Method of Several Sources for 5G Networks</a></h3><p><b>A. Abdelbari</b>, B. Bilgehan · <i>ICECCE 2020, Istanbul (IEEE)</i></p><a class="doi" href="https://doi.org/10.1109/ICECCE49384.2020.9179306" target="_blank" rel="noopener">doi:10.1109/ICECCE49384.2020.9179306</a></div></div>
+      <div class="panel pub"><div class="k">2020</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1109/ICECCE49384.2020.9179201" target="_blank" rel="noopener">Estimation of Global Solar Radiation Using Back Propagation Neural Network: A Case Study Tripoli, Libya</a></h3><p>N. Naser, <b>A. Abdelbari</b> · <i>ICECCE 2020, Istanbul (IEEE)</i></p><a class="doi" href="https://doi.org/10.1109/ICECCE49384.2020.9179201" target="_blank" rel="noopener">doi:10.1109/ICECCE49384.2020.9179201</a></div></div>
+      <div class="panel pub"><div class="k">2019</div><div class="en" lang="en"><h3><a href="https://doi.org/10.23919/ELECO47770.2019.8990469" target="_blank" rel="noopener">An Opportunistic User Scheduling Scheme for Ultra-Dense Wireless Networks</a></h3><p><b>A. Abdelbari</b>, H. Haci · <i>ELECO 2019, Bursa (IEEE), pp. 1080–1084</i></p><a class="doi" href="https://doi.org/10.23919/ELECO47770.2019.8990469" target="_blank" rel="noopener">doi:10.23919/ELECO47770.2019.8990469</a></div></div>
+      <div class="panel pub"><div class="k">2019</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1007/978-3-030-35249-3_55" target="_blank" rel="noopener">Fuzzy Logic-Based User Scheduling Scheme for 5G Wireless Networks and Beyond</a></h3><p><b>A. Abdelbari</b>, H. Haci · <i>ICSCCW 2019, Springer AISC vol. 1095</i></p><a class="doi" href="https://doi.org/10.1007/978-3-030-35249-3_55" target="_blank" rel="noopener">doi:10.1007/978-3-030-35249-3_55</a></div></div>
+      <div class="panel pub"><div class="k">2019</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1007/978-3-030-35249-3_52" target="_blank" rel="noopener">A Novel DOA Estimation Method for Wideband Sources Based on Fuzzy Systems</a></h3><p>B. Bilgehan, <b>A. Abdelbari</b> · <i>ICSCCW 2019, Springer AISC vol. 1095</i></p><a class="doi" href="https://doi.org/10.1007/978-3-030-35249-3_52" target="_blank" rel="noopener">doi:10.1007/978-3-030-35249-3_52</a></div></div>
+      <div class="panel pub"><div class="k">2019</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1109/ISNCC.2019.8909118" target="_blank" rel="noopener">A Novel Scheduling Scheme for Ultra-Dense Networks</a></h3><p>H. Haci, <b>A. Abdelbari</b> · <i>ISNCC 2019, Istanbul (IEEE)</i></p><a class="doi" href="https://doi.org/10.1109/ISNCC.2019.8909118" target="_blank" rel="noopener">doi:10.1109/ISNCC.2019.8909118</a></div></div>
+      </div>
+      <div class="pubgroup">Tezler</div><div class="pubs">
+      <div class="panel pub"><div class="k">2021</div><div><h3 class="en" lang="en"><a href="http://docs.neu.edu.tr/library/9451044175.pdf" target="_blank" rel="noopener">On the Localization and Detection of Multiple Signals</a></h3><p>Doktora tezi, Elektrik ve Elektronik Mühendisliği, Yakın Doğu Üniversitesi</p></div></div>
+      <div class="panel pub"><div class="k">2018</div><div><h3 class="en" lang="en"><a href="http://docs.neu.edu.tr/library/6718703723.pdf" target="_blank" rel="noopener">Direction of Arrival Estimation of Wideband RF Sources</a></h3><p>Yüksek lisans tezi, Elektrik ve Elektronik Mühendisliği, Yakın Doğu Üniversitesi</p></div></div>
+      </div>
+      <div class="pubgroup">Hazırlık aşamasında ve devam eden</div><div class="pubs">
+      <div class="panel pub"><div class="k">Hazırlanıyor</div><div><h3>MIMO-NOMA'da güç tahsisi ve sembolik sezim</h3><p>F. Al-Turjman ile. IntechOpen'ın Yapay Zekâ, Bilgisayar Bilimi ve Robotik Teknolojisi dergisi için.</p></div></div>
+      <div class="panel pub"><div class="k">Hazırlanıyor</div><div><h3>İnşaat mühendisliğinde IoT için Rayleigh sönümlemeli kanalda NOMA hata olasılığı</h3><p>B. Bilgehan ve F. Al-Turjman ile.</p></div></div>
+      <div class="panel pub"><div class="k">Hazırlanıyor</div><div><h3>BPSK, 16-QAM ve 64-QAM için birleşik BER türetimi</h3><p>B. Bilgehan ve F. Al-Turjman ile.</p></div></div>
+      <div class="panel pub"><div class="k">Devam ediyor</div><div><h3>Dağıtık pasif koherent konumlama</h3><p>Uçak tespiti için çok düğümlü FM pasif radar: bistatik geometri, CAF işleme ve ADS-B ile doğrulanmış tespit istatistikleri.</p></div></div>
+      </div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="sec-head"><span class="num">04</span><h2>Hakkımda</h2></div>
+    <div class="two">
+      <div class="panel">
+        <h3>Özgeçmiş</h3>
+        <p style="margin-top:0">Sistem geliştiriciliğine yönelmiş bir elektrik mühendisiyim. Lefkoşa'daki Yakın Doğu Üniversitesi'nde Dr. Öğretim Üyesi ve Bilişim Sistemleri Mühendisliği Bölüm Başkanı olarak zamanımı eğitim, araştırma ve bölüm yönetimi arasında paylaştırıyorum. Daha önce RoboLabs'ta Yazılım Mühendisliği Müdürü olarak otonom robotlar için gömülü sistemler ve ROS 2 tabanlı kontrol mimarileri geliştirdim.</p><p>Çalışmalarım <b>yazılım, sinyal ve otonominin</b> kesiştiği noktada: döngüde otopilotlu simülasyon, radar sinyal işleme, kablosuz bağlantı analizi ve ertesi sabah gerçek bir sınıfta kullanabileceğim araçlar.</p><p style="margin-bottom:0"><b>Robotik, İHA ve simülasyon ile savunma yazılımı</b> alanlarında mühendislik pozisyonları arıyorum.</p>
+        <h3 style="margin-top:18px">Eğitim</h3>
+        <ul class="edu"><li><b>2021</b> · Doktora, Elektrik ve Elektronik Mühendisliği, Yakın Doğu Üniversitesi</li><li><b>2018</b> · Yüksek Lisans, Elektrik ve Elektronik Mühendisliği, Yakın Doğu Üniversitesi</li><li><b>2014</b> · Lisans, Elektrik ve Elektronik Mühendisliği, Sohag Üniversitesi, Mısır</li></ul>
+      </div>
+      <div class="panel">
+        <h3>Dersler · Güz 2026</h3>
+        <div class="course"><code>AIE401</code><span>Robotiğe Giriş: 4. sınıf yapay zekâ öğrencileri için simülasyon öncelikli robotik</span></div><div class="course"><code>AII452</code><span>Yapay Zekâ Uygulamaları: 4. sınıf öğrencileri için gerçek dünya projeleri</span></div><div class="course"><code>AII020</code><span>Sistem Analizi ve Tasarımı: tasarım ve çevik (agile) uygulamalar</span></div><div class="course"><code>AII108</code><span>Python ile Nesne Yönelimli Programlama</span></div><div class="course"><code>—</code><span>Mühendislik Etiği: çift kullanımlı ve emniyet kritik vaka çalışmaları</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div><b style="color:var(--ink)">Amr Abdelbari</b> · Lefkoşa, Kıbrıs</div>
+    <div class="contact">
+      <a class="btn" href="mailto:amro410@gmail.com">E-posta</a>
+      <a class="btn" href="https://scholar.google.com/citations?user=TgjgGgoAAAAJ&amp;hl=tr" target="_blank" rel="noopener">Google Scholar</a>
+      <a class="btn" href="https://www.linkedin.com/in/amr-abdelbari-935a6542/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/amro2021" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script>window.ARENA_TEXT = {"start": "Maç başladı · 4 takım havada", "lock": "{a} → {b} kilitlendi  +10", "attack": "saldırı", "evade": "kaçış"};</script>
+<script src="../assets/arena.js"></script>
+</body>
+</html>

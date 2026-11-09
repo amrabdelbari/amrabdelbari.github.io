@@ -1,308 +1,142 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Amr Abdelbari — UAV simulation, radar & wireless systems</title>
-<meta name="description" content="Amr Abdelbari — Assistant Professor and Head of Information Systems Engineering in Nicosia, Cyprus. UAV competition simulation, passive radar, NOMA/MIMO wireless research.">
+<meta name="description" content="Dr. Amr Abdelbari — Assistant Professor and Head of Information Systems Engineering at Near East University, Nicosia, Cyprus. UAV competition simulation, passive radar, NOMA/MIMO wireless research.">
 <meta property="og:title" content="Amr Abdelbari — UAV simulation, radar & wireless systems">
 <meta property="og:description" content="Builder of the Virtual UAV Engagement Arena: ArduPilot SITL, referee engine, 100-team scale, radar & EW league.">
+<meta property="og:image" content="https://amrabdelbari.github.io/assets/photo.jpg">
+<meta property="og:url" content="https://amrabdelbari.github.io/">
 <meta name="theme-color" content="#141413">
+<link rel="canonical" href="https://amrabdelbari.github.io/">
+<link rel="alternate" hreflang="en" href="https://amrabdelbari.github.io/">
+<link rel="alternate" hreflang="ar" href="https://amrabdelbari.github.io/ar/">
+<link rel="alternate" hreflang="tr" href="https://amrabdelbari.github.io/tr/">
+<link rel="alternate" hreflang="x-default" href="https://amrabdelbari.github.io/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232f6fde'/%3E%3Cpath d='M16 6 L19 15 L27 17 L19 19 L16 26 L13 19 L5 17 L13 15Z' fill='white'/%3E%3C/svg%3E">
-<style>
-  :root { --bg:#f6f5f1; --panel:#ffffff; --ink:#1d1d1b; --quiet:#6b6a64; --line:#d9d7cf;
-          --accent:#2f6fde; --bad:#c2412d; --good:#2e8b57; --warn:#c98a12; --map:#eef1ea;
-          --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-  @media (prefers-color-scheme: dark) { :root { --bg:#141413; --panel:#1f1e1c; --ink:#ecebe6; --quiet:#9b9990;
-          --line:#3a3935; --map:#1a1d19; --accent:#5b8ef0; } }
-  * { box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
-  a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:underline; }
-  .wrap { max-width:1120px; margin:0 auto; padding:0 20px; }
-
-  /* top bar — same pattern as the arena dashboard header */
-  header.bar { position:sticky; top:0; z-index:10; background:color-mix(in srgb, var(--bg) 88%, transparent);
-               backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
-  header.bar .wrap { display:flex; align-items:center; gap:14px; height:56px; }
-  header.bar b { font-size:15px; letter-spacing:.01em; }
-  header.bar nav { display:flex; gap:18px; margin-left:auto; font-size:14px; }
-  header.bar nav a { color:var(--quiet); font-weight:500; } header.bar nav a:hover { color:var(--ink); text-decoration:none; }
-  @media (max-width:720px){ header.bar nav a.opt { display:none; } }
-  .pill { display:inline-block; padding:2px 10px; border-radius:99px; border:1px solid var(--line); font-weight:600;
-          font-size:12px; font-variant-numeric:tabular-nums; white-space:nowrap; }
-  .pill.good { border-color:var(--good); color:var(--good); }
-  .pill.warn { border-color:var(--warn); color:var(--warn); }
-  .pill.acc  { border-color:var(--accent); color:var(--accent); }
-
-  /* hero */
-  .hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:40px; align-items:center; padding:56px 0 40px; }
-  @media (max-width:900px){ .hero { grid-template-columns:1fr; padding-top:32px; gap:24px; } }
-  .kicker { font:600 12px/1 var(--mono); text-transform:uppercase; letter-spacing:.12em; color:var(--quiet); }
-  h1 { font-size:clamp(34px,5vw,54px); line-height:1.05; margin:14px 0 16px; letter-spacing:-.02em; }
-  h1 span { color:var(--accent); }
-  .lede { font-size:18px; color:var(--quiet); max-width:34em; margin:0 0 22px; }
-  .lede strong { color:var(--ink); font-weight:600; }
-  .cta { display:flex; flex-wrap:wrap; gap:10px; }
-  .btn { display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border-radius:8px; border:1px solid var(--line);
-         background:var(--panel); color:var(--ink); font-weight:600; font-size:14px; }
-  .btn:hover { border-color:var(--accent); text-decoration:none; }
-  .btn.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
-
-  /* live arena panel */
-  .panel { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:12px; min-width:0; }
-  .panel h2, .panel .h { display:flex; align-items:center; gap:8px; font:600 12px/1 var(--mono); text-transform:uppercase;
-               letter-spacing:.08em; color:var(--quiet); margin:2px 2px 10px; }
-  .panel .h .grow { flex:1; }
-  #arena { width:100%; aspect-ratio:1.25; display:block; border-radius:8px; background:var(--map); }
-  .scoreboard { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:10px; font-variant-numeric:tabular-nums; }
-  .scoreboard div { border:1px solid var(--line); border-radius:8px; padding:6px 8px; font-size:12px; color:var(--quiet); }
-  .scoreboard b { display:block; color:var(--ink); font-size:18px; }
-  .sw { display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:5px; }
-  #feed { height:66px; overflow:hidden; margin-top:8px; font:12px/1.5 var(--mono); color:var(--quiet); }
-  #feed .pos { color:var(--good); } #feed .neg { color:var(--bad); }
-
-  /* sections */
-  section.block { padding:56px 0; border-top:1px solid var(--line); }
-  .sec-head { display:flex; align-items:baseline; gap:14px; margin-bottom:24px; flex-wrap:wrap; }
-  .sec-head h2 { font-size:28px; margin:0; letter-spacing:-.01em; }
-  .sec-head p { color:var(--quiet); margin:0; }
-  .num { font:600 12px/1 var(--mono); color:var(--accent); }
-
-  /* flagship */
-  .flag { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:20px; }
-  @media (max-width:900px){ .flag { grid-template-columns:1fr; } }
-  .flag .panel { padding:20px; }
-  .flag h3 { margin:0 0 6px; font-size:22px; }
-  .flag p { margin:0 0 12px; }
-  .tags { display:flex; flex-wrap:wrap; gap:6px; margin:12px 0; }
-  .tag { font:500 12px/1 var(--mono); padding:5px 8px; border-radius:6px; background:var(--map); border:1px solid var(--line); }
-  .stats { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
-  .stat { border:1px solid var(--line); border-radius:10px; padding:14px; background:var(--panel); }
-  .stat b { display:block; font-size:26px; letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
-  .stat span { color:var(--quiet); font-size:13px; line-height:1.4; display:block; }
-  table { width:100%; border-collapse:collapse; font-size:14px; font-variant-numeric:tabular-nums; }
-  th, td { text-align:left; padding:8px 6px; border-bottom:1px solid var(--line); vertical-align:top; }
-  th { color:var(--quiet); font-weight:500; font-size:12px; text-transform:uppercase; letter-spacing:.05em; }
-  td:first-child { font:600 13px var(--mono); color:var(--quiet); width:28px; }
-  ul.feat { margin:0; padding:0; list-style:none; display:grid; gap:10px; }
-  ul.feat li { padding-left:18px; position:relative; }
-  ul.feat li::before { content:""; position:absolute; left:0; top:.6em; width:8px; height:8px; border-radius:2px; background:var(--accent); }
-  ul.feat li b { font-weight:600; }
-  .arch { font:12.5px/1.55 var(--mono); background:var(--map); border:1px solid var(--line); border-radius:8px; padding:12px;
-          overflow-x:auto; white-space:pre; margin:12px 0 0; color:var(--ink); }
-  .lessons { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px; }
-  @media (max-width:900px){ .lessons { grid-template-columns:1fr; } }
-  .lessons .panel { padding:16px; }
-  .lessons h4 { margin:0 0 6px; font-size:15px; }
-  .lessons p { margin:0; color:var(--quiet); font-size:14px; }
-
-  /* cards grid */
-  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-  @media (max-width:900px){ .grid { grid-template-columns:1fr 1fr; } }
-  @media (max-width:600px){ .grid { grid-template-columns:1fr; } }
-  .card { display:flex; flex-direction:column; gap:8px; padding:18px; }
-  .card h3 { margin:0; font-size:17px; }
-  .card p { margin:0; color:var(--quiet); font-size:14px; flex:1; }
-  .card .links { display:flex; gap:14px; font-size:14px; font-weight:600; }
-  .card .top { display:flex; align-items:center; justify-content:space-between; gap:8px; }
-
-  /* research */
-  .pubs { display:grid; gap:10px; }
-  .pub { display:grid; grid-template-columns:120px 1fr; gap:16px; padding:16px; }
-  @media (max-width:600px){ .pub { grid-template-columns:1fr; gap:6px; } }
-  .pub .k { font:600 12px/1.4 var(--mono); color:var(--quiet); text-transform:uppercase; letter-spacing:.06em; }
-  .pub h3 { margin:0 0 4px; font-size:16px; }
-  .pub p { margin:0; color:var(--quiet); font-size:14px; }
-
-  /* about / teaching */
-  .two { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  @media (max-width:800px){ .two { grid-template-columns:1fr; } }
-  .two .panel { padding:20px; }
-  .two h3 { margin:0 0 10px; font-size:17px; }
-  .course { display:flex; gap:12px; padding:8px 0; border-bottom:1px dashed var(--line); font-size:14px; }
-  .course:last-child { border-bottom:0; }
-  .course code { font:600 12px var(--mono); color:var(--accent); width:62px; flex:none; padding-top:2px; }
-
-  footer { border-top:1px solid var(--line); padding:40px 0 60px; color:var(--quiet); font-size:14px; }
-  footer .wrap { display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; align-items:center; }
-  .contact { display:flex; gap:10px; flex-wrap:wrap; }
-</style>
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 
 <header class="bar">
   <div class="wrap">
     <b>Amr Abdelbari</b>
-    <span class="pill good" title="Open to roles in robotics, UAV simulation and defence software">● open to work</span>
+    <span class="pill good opt-pill" title="Open to roles in robotics, UAV simulation and defence software">● open to work</span>
     <nav>
-      <a href="#arena-project">UAV Arena</a>
-      <a href="#projects">Projects</a>
-      <a href="#research" class="opt">Research</a>
+      <a href="#arena-project" class="opt">UAV Arena</a>
+      <a href="#projects" class="opt">Projects</a>
+      <a href="#research">Research</a>
       <a href="#about" class="opt">About</a>
-      <a href="#contact">Contact</a>
+      <a href="#contact" class="opt">Contact</a>
     </nav>
+    <div class="langs" aria-label="Language"><a href="" hreflang="en" lang="en" aria-current="page">EN</a><a href="ar/" hreflang="ar" lang="ar">عربي</a><a href="tr/" hreflang="tr" lang="tr">TR</a></div>
   </div>
 </header>
 
 <main class="wrap">
 
-  <!-- HERO -->
   <div class="hero">
     <div>
-      <div class="kicker">Engineer · Educator · Nicosia, Cyprus</div>
+      <div class="who">
+        <div class="avatar" aria-hidden="true">AA<img src="assets/photo.jpg" alt="" onerror="this.remove()"></div>
+        <div><div class="name">Dr. Amr Abdelbari</div><div class="kicker">Engineer · Educator · Nicosia, Cyprus</div></div>
+      </div>
       <h1>I build systems that <span>fly, sense and score</span> themselves.</h1>
-      <p class="lede">
-        Assistant Professor and <strong>Head of Information Systems Engineering</strong>, with an electrical-engineering background.
-        I build <strong>UAV competition simulators</strong> on real autopilots, <strong>passive radar</strong> from SDR and FPGA hardware,
-        and research <strong>NOMA / MIMO</strong> wireless links.
-      </p>
+      <p class="lede">Assistant Professor and <strong>Head of Information Systems Engineering</strong> at Near East University, with an electrical-engineering background. I build <strong>UAV competition simulators</strong> on real autopilots, <strong>passive radar</strong> from SDR and FPGA hardware, and research <strong>NOMA / MIMO</strong> wireless links.</p>
       <div class="cta">
         <a class="btn primary" href="#arena-project">See the UAV Arena →</a>
-        <a class="btn" href="https://github.com/amro2021" target="_blank" rel="noopener">GitHub ↗</a>
-        <a class="btn" href="#contact">Contact</a>
+        <a class="btn" href="#research">Publications</a>
+        <a class="btn" href="https://scholar.google.com/citations?user=TgjgGgoAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar ↗</a>
+        <a class="btn" href="https://www.linkedin.com/in/amr-abdelbari-935a6542/" target="_blank" rel="noopener">LinkedIn ↗</a>
       </div>
     </div>
 
     <div class="panel" aria-label="Live arena simulation">
-      <div class="h"><span>Arena · live</span><span class="pill good" id="state">RUNNING</span><span class="pill" id="clock">00:00</span><span class="grow"></span><span>sim-lite</span></div>
-      <canvas id="arena" width="640" height="512"></canvas>
-      <div class="scoreboard" id="board"></div>
-      <div id="feed"></div>
+      <div class="h"><span>Arena · live</span><span class="pill good" id="state">RUNNING</span><span class="pill" id="clock">00:00</span><span class="grow"></span><span lang="en">sim-lite</span></div>
+      <canvas id="arena" dir="ltr" width="640" height="512"></canvas>
+      <div class="scoreboard" id="board" dir="ltr"></div>
+      <div id="feed" dir="ltr"></div>
     </div>
   </div>
 
-  <!-- FLAGSHIP -->
   <section class="block" id="arena-project">
     <div class="sec-head"><span class="num">01</span><h2>Virtual UAV Engagement Arena</h2><p>Flagship project · 2026</p></div>
-
     <div class="flag">
       <div class="panel">
         <h3>A virtual Fighting UAV competition, run on real ArduPilot autopilots.</h3>
-        <p>
-          A competition platform for fixed-wing UAV teams, modelled on the TEKNOFEST Fighting UAV format.
-          Teams score by holding an opponent in their camera's hit zone, finishing a QR dive task, avoiding penalties
-          and landing safely. Every aircraft is a real <b>ArduPlane SITL</b> autopilot, flown by the team's own code or by
-          hand from a <b>3D browser cockpit</b>, and an <b>automatic referee</b> scores every match from ground truth.
-          Guests watch in 3D from one link.
-        </p>
-        <div class="tags">
-          <span class="tag">Python</span><span class="tag">ArduPilot SITL</span><span class="tag">PX4</span><span class="tag">MAVLink</span>
-          <span class="tag">ROS 2</span><span class="tag">Gazebo</span><span class="tag">FastAPI / uvicorn</span><span class="tag">NumPy</span>
-          <span class="tag">WebGL cockpit</span><span class="tag">GitHub Actions</span>
-        </div>
-        <ul class="feat">
-          <li><b>Referee engine</b>: lock-on validation (≥ 4 s window, ≥ 90 % in-zone, no gap &gt; 0.3 s), geofence, telemetry watchdog, false-claim and collision penalties, warn / freeze / eject.</li>
-          <li><b>Four rulebooks</b>: standard, TEKNOFEST mode, a defence scenario, and a standalone league.</li>
-          <li><b>League mode</b>: fog of war, ground radar, hidden SAM sites, GPS and comms jamming, on-board ECM, and an unattended season runner that publishes standings and 3D replays.</li>
-          <li><b>Per-aircraft camera images</b> streamed to each team, with recorded evidence clips for every lock-on review.</li>
-          <li><b>Fair play</b>: per-team tokens, rate limits, server-side time, and an isolated MAVLink port for each team.</li>
-          <li><b>Multi-autopilot</b>: ArduPilot and PX4 airframes, homologated before a match, spread across several computers.</li>
-        </ul>
+        <p>A competition platform for fixed-wing UAV teams, modelled on the TEKNOFEST Fighting UAV format. Teams score by holding an opponent in their camera's hit zone, finishing a QR dive task, avoiding penalties and landing safely. Every aircraft is a real <b>ArduPlane SITL</b> autopilot, flown by the team's own code or by hand from a <b>3D browser cockpit</b>, and an <b>automatic referee</b> scores every match from ground truth. Guests watch in 3D from one link.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">ArduPilot SITL</span><span class="tag">PX4</span><span class="tag">MAVLink</span><span class="tag">ROS 2</span><span class="tag">Gazebo</span><span class="tag">FastAPI / uvicorn</span><span class="tag">NumPy</span><span class="tag">WebGL cockpit</span><span class="tag">GitHub Actions</span></div>
+        <ul class="feat"><li><b>Referee engine</b>: lock-on validation (≥ 4 s window, ≥ 90 % in-zone, no gap &gt; 0.3 s), geofence, telemetry watchdog, false-claim and collision penalties, warn / freeze / eject.</li><li><b>Four rulebooks</b>: standard, TEKNOFEST mode, a defence scenario, and a standalone league.</li><li><b>League mode</b>: fog of war, ground radar, hidden SAM sites, GPS and comms jamming, on-board ECM, and an unattended season runner that publishes standings and 3D replays.</li><li><b>Per-aircraft camera images</b> streamed to each team, with recorded evidence clips for every lock-on review.</li><li><b>Fair play</b>: per-team tokens, rate limits, server-side time, and an isolated MAVLink port for each team.</li><li><b>Multi-autopilot</b>: ArduPilot and PX4 airframes, homologated before a match, spread across several computers.</li></ul>
 <div class="arch">visiting team laptop                 host (Ubuntu)
   auto_team.py / manual_team.py ──HTTP──▶  arena server: referee · scoring · dashboard
   3D cockpit (browser)          ─MAVLink▶  ArduPlane SITL × N  (+ PX4 nodes)
 referee browser                 ──HTTP──▶  referee console: start · pause · penalise · eject
 guests                          ──/watch▶  3D live view (10 s delay)</div>
       </div>
-
       <div style="display:grid; gap:14px; align-content:start">
-        <div class="stats">
-          <div class="stat"><b>100</b><span>teams in one match: about twice the last TEKNOFEST final (42)</span></div>
-          <div class="stat"><b>2.7 ms</b><span>per referee tick for 100 aircraft (all 9,900 camera/target pairs) against a 50 ms budget</span></div>
-          <div class="stat"><b>~12k</b><span>lines of Python: server, referee, starter teams, scripts and tests</span></div>
-          <div class="stat"><b>5 Hz</b><span>telemetry from every team, each reply carrying all the other aircraft</span></div>
-        </div>
+        <div class="stats"><div class="stat"><b>100</b><span>teams in one match: about twice the last TEKNOFEST final (42)</span></div><div class="stat"><b>2.7 ms</b><span>per referee tick for 100 aircraft (all 9,900 camera/target pairs) against a 50 ms budget</span></div><div class="stat"><b>~12k</b><span>lines of Python: server, referee, starter teams, scripts and tests</span></div><div class="stat"><b>5 Hz</b><span>telemetry from every team, each reply carrying all the other aircraft</span></div></div>
         <div class="panel" style="padding:16px">
           <div class="h">Rehearsal results · 25 Oct 2026</div>
-          <table>
-            <tr><th>#</th><th>Setup</th><th>Outcome</th></tr>
-            <tr><td>1</td><td>Two identical hunters</td><td>Collided at 23.7 s, both out</td></tr>
-            <tr><td>3</td><td>Hunter vs patrol, 10 min</td><td>11 valid locks; final score 135 – 3</td></tr>
-            <tr><td>4</td><td>Fly-out vs false-claim team</td><td>Ejected after 30 s / after 5 false claims</td></tr>
-            <tr><td>5</td><td>Telemetry dropped at 60 s</td><td>Warned at 5 s, ejected at 30 s</td></tr>
-            <tr><td>6</td><td>ArduPlane SITL, 3 runs</td><td>Valid locks every run; staggered landings fixed approach collisions</td></tr>
-          </table>
+          <table><tr><th>#</th><th>Setup</th><th>Outcome</th></tr><tr><td>1</td><td>Two identical hunters</td><td>Collided at 23.7 s, both out</td></tr><tr><td>3</td><td>Hunter vs patrol, 10 min</td><td>11 valid locks; final score 135 – 3</td></tr><tr><td>4</td><td>Fly-out vs false-claim team</td><td>Ejected after 30 s / after 5 false claims</td></tr><tr><td>5</td><td>Telemetry dropped at 60 s</td><td>Warned at 5 s, ejected at 30 s</td></tr><tr><td>6</td><td>ArduPlane SITL, 3 runs</td><td>Valid locks every run; staggered landings fixed approach collisions</td></tr></table>
         </div>
       </div>
     </div>
-
-    <div class="lessons">
-      <div class="panel"><h4>The first merge is the most dangerous moment</h4><p>With identical code, both aircraft pointed at each other within 20 s of take-off. Teams need a deconfliction rule before they need a lock-on algorithm.</p></div>
-      <div class="panel"><h4>Equal aircraft circle forever</h4><p>Points come from asymmetry: slowing down to out-turn (ω = g·tan φ / V), using altitude, or extending and re-engaging.</p></div>
-      <div class="panel"><h4>Evasion is worth as much as attack</h4><p>A predictable target gave up 11 locks in 10 minutes. Being locked costs −2, against +10 for the attacker.</p></div>
-    </div>
+    <div class="lessons"><div class="panel"><h4>The first merge is the most dangerous moment</h4><p>With identical code, both aircraft pointed at each other within 20 s of take-off. Teams need a deconfliction rule before they need a lock-on algorithm.</p></div><div class="panel"><h4>Equal aircraft circle forever</h4><p>Points come from asymmetry: slowing down to out-turn (ω = g·tan φ / V), using altitude, or extending and re-engaging.</p></div><div class="panel"><h4>Evasion is worth as much as attack</h4><p>A predictable target gave up 11 locks in 10 minutes. Being locked costs −2, against +10 for the attacker.</p></div></div>
   </section>
 
-  <!-- PROJECTS -->
   <section class="block" id="projects">
     <div class="sec-head"><span class="num">02</span><h2>More projects</h2><p>Hardware, signals and software</p></div>
     <div class="grid">
-      <div class="panel card">
-        <div class="top"><h3>Passive FM radar (PCL)</h3><span class="pill warn">research</span></div>
-        <p>A passive coherent location system that detects aircraft using FM broadcast stations as illuminators. It uses RTL-SDR receivers, a DE10-Lite FPGA, cross-ambiguity processing with direct-path cancellation in Python, and ADS-B ground truth for validation. Next step: a coherent multi-channel array.</p>
-        <div class="tags"><span class="tag">SDR</span><span class="tag">FPGA</span><span class="tag">DSP</span><span class="tag">ADS-B</span></div>
-      </div>
-      <div class="panel card">
-        <div class="top"><h3>QR Lab</h3><span class="pill good">live</span></div>
-        <p>Screen-to-camera communication between phones: fountain-coded file transfer, colour and spatial multiplexing, a NOMA-style layered broadcast with SIC, encrypted per-group quizzes, and end-to-end encrypted QR chat (ECDH + AES-GCM). It also ships as an offline Android app, and was field-tested with 20+ students.</p>
-        <div class="tags"><span class="tag">JavaScript</span><span class="tag">WebCrypto</span><span class="tag">Capacitor</span></div>
-        <div class="links"><a href="https://amro2021.github.io/qr-transfer/" target="_blank" rel="noopener">Open ↗</a><a href="https://github.com/amro2021/qr-transfer" target="_blank" rel="noopener">Code ↗</a></div>
-      </div>
-      <div class="panel card">
-        <div class="top"><h3>MDANetwork</h3><span class="pill acc">prototype</span></div>
-        <p>A true peer-to-peer networking and chat system: nodes talk directly, with no central relay, across different networks. It runs on desktop and web, and a native Kotlin Android client is planned.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">P2P</span><span class="tag">NAT traversal</span></div>
-        <div class="links"><a href="https://github.com/amro2021/MDANetPro" target="_blank" rel="noopener">Code ↗</a></div>
-      </div>
-      <div class="panel card">
-        <div class="top"><h3>FlyDetectandTrack</h3><span class="pill">vision</span></div>
-        <p>Live insect tracking with persistent IDs, using OpenCV detection, a Kalman filter per track and Hungarian assignment on IoU. It draws fading motion trails and a live HUD.</p>
-        <div class="tags"><span class="tag">OpenCV</span><span class="tag">Kalman</span><span class="tag">Tracking</span></div>
-        <div class="links"><a href="https://github.com/amro2021/FlyDetectandTrack" target="_blank" rel="noopener">Code ↗</a></div>
-      </div>
-      <div class="panel card">
-        <div class="top"><h3>FPGA NPU (DE10-Lite)</h3><span class="pill warn">in design</span></div>
-        <p>An educational INT8 systolic-array accelerator on a MAX 10 FPGA with a Nios V soft core, benchmarking quantised LeNet/MNIST inference against software.</p>
-        <div class="tags"><span class="tag">Verilog</span><span class="tag">Nios V</span><span class="tag">Quantisation</span></div>
-      </div>
-      <div class="panel card">
-        <div class="top"><h3>HomecareBot</h3><span class="pill">bot</span></div>
-        <p>A Telegram assistant that supports patients recovering at home after open-heart surgery, with symptom-monitoring alerts and care guidance.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">Telegram API</span></div>
-        <div class="links"><a href="https://github.com/amro2021/HomecareBot" target="_blank" rel="noopener">Code ↗</a></div>
-      </div>
+      <div class="panel card"><div class="top"><h3>Passive FM radar (PCL)</h3><span class="pill warn">research</span></div><p>A passive coherent location system that detects aircraft using FM broadcast stations as illuminators. It uses RTL-SDR receivers, a DE10-Lite FPGA, cross-ambiguity processing with direct-path cancellation in Python, and ADS-B ground truth for validation. Next step: a coherent multi-channel array.</p><div class="tags"><span class="tag">SDR</span><span class="tag">FPGA</span><span class="tag">DSP</span><span class="tag">ADS-B</span></div></div><div class="panel card"><div class="top"><h3>QR Lab</h3><span class="pill good">live</span></div><p>Screen-to-camera communication between phones: fountain-coded file transfer, colour and spatial multiplexing, a NOMA-style layered broadcast with SIC, encrypted per-group quizzes, and end-to-end encrypted QR chat (ECDH + AES-GCM). It also ships as an offline Android app, and was field-tested with 20+ students.</p><div class="tags"><span class="tag">JavaScript</span><span class="tag">WebCrypto</span><span class="tag">Capacitor</span></div><div class="links"><a href="https://amro2021.github.io/qr-transfer/" target="_blank" rel="noopener">Open ↗</a><a href="https://github.com/amro2021/qr-transfer" target="_blank" rel="noopener">Code ↗</a></div></div><div class="panel card"><div class="top"><h3>MDANetwork</h3><span class="pill acc">prototype</span></div><p>A true peer-to-peer networking and chat system: nodes talk directly, with no central relay, across different networks. It runs on desktop and web, and a native Kotlin Android client is planned.</p><div class="tags"><span class="tag">Python</span><span class="tag">P2P</span><span class="tag">NAT traversal</span></div><div class="links"><a href="https://github.com/amro2021/MDANetPro" target="_blank" rel="noopener">Code ↗</a></div></div><div class="panel card"><div class="top"><h3>FlyDetectandTrack</h3><span class="pill ">vision</span></div><p>Live insect tracking with persistent IDs, using OpenCV detection, a Kalman filter per track and Hungarian assignment on IoU. It draws fading motion trails and a live HUD.</p><div class="tags"><span class="tag">OpenCV</span><span class="tag">Kalman</span><span class="tag">Tracking</span></div><div class="links"><a href="https://github.com/amro2021/FlyDetectandTrack" target="_blank" rel="noopener">Code ↗</a></div></div><div class="panel card"><div class="top"><h3>FPGA NPU (DE10-Lite)</h3><span class="pill warn">in design</span></div><p>An educational INT8 systolic-array accelerator on a MAX 10 FPGA with a Nios V soft core, benchmarking quantised LeNet/MNIST inference against software.</p><div class="tags"><span class="tag">Verilog</span><span class="tag">Nios V</span><span class="tag">Quantisation</span></div></div><div class="panel card"><div class="top"><h3>HomecareBot</h3><span class="pill ">bot</span></div><p>A Telegram assistant that supports patients recovering at home after open-heart surgery, with symptom-monitoring alerts and care guidance.</p><div class="tags"><span class="tag">Python</span><span class="tag">Telegram API</span></div><div class="links"><a href="https://github.com/amro2021/HomecareBot" target="_blank" rel="noopener">Code ↗</a></div></div>
     </div>
   </section>
 
-  <!-- RESEARCH -->
   <section class="block" id="research">
-    <div class="sec-head"><span class="num">03</span><h2>Research</h2><p>Wireless communications · error-probability analysis</p></div>
-    <div class="pubs">
-      <div class="panel pub"><div class="k">In preparation</div><div><h3>MIMO-NOMA power allocation and symbolic detection</h3><p>With F. Al-Turjman. Being prepared for IntechOpen's AI, Computer Science and Robotics Technology journal.</p></div></div>
+    <div class="sec-head"><span class="num">03</span><h2>Research</h2><p>Signal processing · DOA estimation · Massive MIMO · NOMA · 5G scheduling</p></div>
+    <div class="profiles"><a class="btn" href="https://scholar.google.com/citations?user=TgjgGgoAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar ↗</a><a class="btn" href="https://www.linkedin.com/in/amr-abdelbari-935a6542/" target="_blank" rel="noopener">LinkedIn ↗</a><a class="btn" href="https://orcid.org/0000-0002-5861-7762" target="_blank" rel="noopener">ORCID ↗</a><a class="btn" href="https://aif.neu.edu.tr/staff/amr-abdelbari/" target="_blank" rel="noopener">NEU staff page ↗</a><a class="btn" href="https://github.com/amro2021" target="_blank" rel="noopener">GitHub ↗</a></div>
+      <div class="pubgroup">Journal articles · 5</div><div class="pubs">
+      <div class="panel pub"><div class="k">2025</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1002/dac.70223" target="_blank" rel="noopener">Precoding Design for Massive MIMO Channels with Imperfect CSI Based on Supervised Dimension Reduction Method</a></h3><p><b>A. Abdelbari</b>, B. Bilgehan · <i>International Journal of Communication Systems, vol. 38, e70223</i></p><a class="doi" href="https://doi.org/10.1002/dac.70223" target="_blank" rel="noopener">doi:10.1002/dac.70223</a></div></div>
+      <div class="panel pub"><div class="k">2021</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1007/s11045-020-00757-6" target="_blank" rel="noopener">PESO: Probabilistic Evaluation of Subspaces Orthogonality for Wideband DOA Estimation</a></h3><p><b>A. Abdelbari</b>, B. Bilgehan · <i>Multidimensional Systems and Signal Processing</i></p><a class="doi" href="https://doi.org/10.1007/s11045-020-00757-6" target="_blank" rel="noopener">doi:10.1007/s11045-020-00757-6</a></div></div>
+      <div class="panel pub"><div class="k">2020</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1002/dac.4425" target="_blank" rel="noopener">A Probabilistic-Based Approach for DOA Estimation and Localization of Multiple Sources</a></h3><p><b>A. Abdelbari</b>, B. Bilgehan · <i>International Journal of Communication Systems, vol. 33, e4425</i></p><a class="doi" href="https://doi.org/10.1002/dac.4425" target="_blank" rel="noopener">doi:10.1002/dac.4425</a></div></div>
+      <div class="panel pub"><div class="k">2020</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1002/dac.4229" target="_blank" rel="noopener">Throughput Enhanced Scheduling (TES) Scheme for Ultra-Dense Networks</a></h3><p>H. Haci, <b>A. Abdelbari</b> · <i>International Journal of Communication Systems, vol. 33, e4229</i></p><a class="doi" href="https://doi.org/10.1002/dac.4229" target="_blank" rel="noopener">doi:10.1002/dac.4229</a></div></div>
+      <div class="panel pub"><div class="k">2019</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1002/dac.3968" target="_blank" rel="noopener">Fast Detection and DOA Estimation of the Unknown Wideband Signal Sources</a></h3><p>B. Bilgehan, <b>A. Abdelbari</b> · <i>International Journal of Communication Systems, vol. 32, e3968</i></p><a class="doi" href="https://doi.org/10.1002/dac.3968" target="_blank" rel="noopener">doi:10.1002/dac.3968</a></div></div>
+      </div>
+      <div class="pubgroup">Conference papers · 8</div><div class="pubs">
+      <div class="panel pub"><div class="k">2022</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1109/ISMSIT56059.2022.9932770" target="_blank" rel="noopener">MDA: Multiple Decentralized Anchors for Hiding Communication Information</a></h3><p><b>A. Abdelbari</b> · <i>ISMSIT 2022, Ankara (IEEE)</i></p><a class="doi" href="https://doi.org/10.1109/ISMSIT56059.2022.9932770" target="_blank" rel="noopener">doi:10.1109/ISMSIT56059.2022.9932770</a></div></div>
+      <div class="panel pub"><div class="k">2022</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1109/AIoTCs58181.2022.00012" target="_blank" rel="noopener">A Novel Precoding Design for Frequency-Selective Massive MIMO Channel</a></h3><p><b>A. Abdelbari</b>, B. Bilgehan · <i>AIoTCs 2022, Nicosia (IEEE), pp. 29–32</i></p><a class="doi" href="https://doi.org/10.1109/AIoTCs58181.2022.00012" target="_blank" rel="noopener">doi:10.1109/AIoTCs58181.2022.00012</a></div></div>
+      <div class="panel pub"><div class="k">2020</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1109/ICECCE49384.2020.9179306" target="_blank" rel="noopener">A Novel DOA Estimation Method of Several Sources for 5G Networks</a></h3><p><b>A. Abdelbari</b>, B. Bilgehan · <i>ICECCE 2020, Istanbul (IEEE)</i></p><a class="doi" href="https://doi.org/10.1109/ICECCE49384.2020.9179306" target="_blank" rel="noopener">doi:10.1109/ICECCE49384.2020.9179306</a></div></div>
+      <div class="panel pub"><div class="k">2020</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1109/ICECCE49384.2020.9179201" target="_blank" rel="noopener">Estimation of Global Solar Radiation Using Back Propagation Neural Network: A Case Study Tripoli, Libya</a></h3><p>N. Naser, <b>A. Abdelbari</b> · <i>ICECCE 2020, Istanbul (IEEE)</i></p><a class="doi" href="https://doi.org/10.1109/ICECCE49384.2020.9179201" target="_blank" rel="noopener">doi:10.1109/ICECCE49384.2020.9179201</a></div></div>
+      <div class="panel pub"><div class="k">2019</div><div class="en" lang="en"><h3><a href="https://doi.org/10.23919/ELECO47770.2019.8990469" target="_blank" rel="noopener">An Opportunistic User Scheduling Scheme for Ultra-Dense Wireless Networks</a></h3><p><b>A. Abdelbari</b>, H. Haci · <i>ELECO 2019, Bursa (IEEE), pp. 1080–1084</i></p><a class="doi" href="https://doi.org/10.23919/ELECO47770.2019.8990469" target="_blank" rel="noopener">doi:10.23919/ELECO47770.2019.8990469</a></div></div>
+      <div class="panel pub"><div class="k">2019</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1007/978-3-030-35249-3_55" target="_blank" rel="noopener">Fuzzy Logic-Based User Scheduling Scheme for 5G Wireless Networks and Beyond</a></h3><p><b>A. Abdelbari</b>, H. Haci · <i>ICSCCW 2019, Springer AISC vol. 1095</i></p><a class="doi" href="https://doi.org/10.1007/978-3-030-35249-3_55" target="_blank" rel="noopener">doi:10.1007/978-3-030-35249-3_55</a></div></div>
+      <div class="panel pub"><div class="k">2019</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1007/978-3-030-35249-3_52" target="_blank" rel="noopener">A Novel DOA Estimation Method for Wideband Sources Based on Fuzzy Systems</a></h3><p>B. Bilgehan, <b>A. Abdelbari</b> · <i>ICSCCW 2019, Springer AISC vol. 1095</i></p><a class="doi" href="https://doi.org/10.1007/978-3-030-35249-3_52" target="_blank" rel="noopener">doi:10.1007/978-3-030-35249-3_52</a></div></div>
+      <div class="panel pub"><div class="k">2019</div><div class="en" lang="en"><h3><a href="https://doi.org/10.1109/ISNCC.2019.8909118" target="_blank" rel="noopener">A Novel Scheduling Scheme for Ultra-Dense Networks</a></h3><p>H. Haci, <b>A. Abdelbari</b> · <i>ISNCC 2019, Istanbul (IEEE)</i></p><a class="doi" href="https://doi.org/10.1109/ISNCC.2019.8909118" target="_blank" rel="noopener">doi:10.1109/ISNCC.2019.8909118</a></div></div>
+      </div>
+      <div class="pubgroup">Theses</div><div class="pubs">
+      <div class="panel pub"><div class="k">2021</div><div><h3 class="en" lang="en"><a href="http://docs.neu.edu.tr/library/9451044175.pdf" target="_blank" rel="noopener">On the Localization and Detection of Multiple Signals</a></h3><p>PhD thesis, Electrical and Electronics Engineering, Near East University</p></div></div>
+      <div class="panel pub"><div class="k">2018</div><div><h3 class="en" lang="en"><a href="http://docs.neu.edu.tr/library/6718703723.pdf" target="_blank" rel="noopener">Direction of Arrival Estimation of Wideband RF Sources</a></h3><p>MSc thesis, Electrical and Electronics Engineering, Near East University</p></div></div>
+      </div>
+      <div class="pubgroup">In preparation and ongoing</div><div class="pubs">
+      <div class="panel pub"><div class="k">In preparation</div><div><h3>MIMO-NOMA power allocation and symbolic detection</h3><p>With F. Al-Turjman. For IntechOpen's AI, Computer Science and Robotics Technology journal.</p></div></div>
       <div class="panel pub"><div class="k">In preparation</div><div><h3>Probability of error for NOMA in Rayleigh fading for IoT in civil engineering</h3><p>With B. Bilgehan and F. Al-Turjman.</p></div></div>
       <div class="panel pub"><div class="k">In preparation</div><div><h3>A unified BER derivation for BPSK, 16-QAM and 64-QAM</h3><p>With B. Bilgehan and F. Al-Turjman.</p></div></div>
       <div class="panel pub"><div class="k">Ongoing</div><div><h3>Distributed passive coherent location</h3><p>Multi-node FM passive radar for aircraft detection: bistatic geometry, CAF processing, and ADS-B validated detection statistics.</p></div></div>
-    </div>
+      </div>
   </section>
 
-  <!-- ABOUT / TEACHING -->
   <section class="block" id="about">
     <div class="sec-head"><span class="num">04</span><h2>About</h2></div>
     <div class="two">
       <div class="panel">
         <h3>Background</h3>
-        <p style="margin-top:0">I'm an electrical engineer turned systems builder. As Assistant Professor and Head of the Information Systems Engineering Department at a university in Nicosia, Cyprus, I split my time between teaching, research and department leadership.</p>
-        <p>My work sits where <b>software, signals and autonomy</b> meet: autopilot-in-the-loop simulation, radar signal processing, wireless link analysis, and tools I can put in front of a real classroom the next morning.</p>
-        <p style="margin-bottom:0">I'm looking for engineering roles in <b>robotics, UAV and simulation, and defence software</b>.</p>
+        <p style="margin-top:0">I'm an electrical engineer turned systems builder. I am Assistant Professor and Head of the Information Systems Engineering Department at Near East University in Nicosia, Cyprus, where I split my time between teaching, research and department leadership. Before that I was Head of Software Engineering at RoboLabs, building embedded systems and ROS 2 control architectures for autonomous robots.</p><p>My work sits where <b>software, signals and autonomy</b> meet: autopilot-in-the-loop simulation, radar signal processing, wireless link analysis, and tools I can put in front of a real classroom the next morning.</p><p style="margin-bottom:0">I'm looking for engineering roles in <b>robotics, UAV and simulation, and defence software</b>.</p>
+        <h3 style="margin-top:18px">Education</h3>
+        <ul class="edu"><li><b>2021</b> · PhD, Electrical and Electronics Engineering, Near East University</li><li><b>2018</b> · MSc, Electrical and Electronics Engineering, Near East University</li><li><b>2014</b> · BSc, Electrical and Electronics Engineering, Sohag University, Egypt</li></ul>
       </div>
       <div class="panel">
         <h3>Teaching · Fall 2026</h3>
-        <div class="course"><code>AIE401</code><span>Introduction to Robotics: simulation-first robotics for 4th-year AI students</span></div>
-        <div class="course"><code>AII452</code><span>AI Applications: real-world projects for 4th-year students</span></div>
-        <div class="course"><code>AII020</code><span>System Analysis and Design: design and agile practice</span></div>
-        <div class="course"><code>AII108</code><span>Object-Oriented Programming in Python</span></div>
-        <div class="course"><code>—</code><span>Engineering Ethics: dual-use and safety-critical case studies</span></div>
+        <div class="course"><code>AIE401</code><span>Introduction to Robotics: simulation-first robotics for 4th-year AI students</span></div><div class="course"><code>AII452</code><span>AI Applications: real-world projects for 4th-year students</span></div><div class="course"><code>AII020</code><span>System Analysis and Design: design and agile practice</span></div><div class="course"><code>AII108</code><span>Object-Oriented Programming in Python</span></div><div class="course"><code>—</code><span>Engineering Ethics: dual-use and safety-critical case studies</span></div>
       </div>
     </div>
   </section>
@@ -314,106 +148,14 @@ guests                          ──/watch▶  3D live view (10 s delay)</div>
     <div><b style="color:var(--ink)">Amr Abdelbari</b> · Nicosia, Cyprus</div>
     <div class="contact">
       <a class="btn" href="mailto:amro410@gmail.com">Email</a>
+      <a class="btn" href="https://scholar.google.com/citations?user=TgjgGgoAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+      <a class="btn" href="https://www.linkedin.com/in/amr-abdelbari-935a6542/" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn" href="https://github.com/amro2021" target="_blank" rel="noopener">GitHub</a>
     </div>
   </div>
 </footer>
 
-<script>
-/* A small top-down arena: four fixed-wing aircraft with a pursuit / patrol mix.
-   Each aircraft has a forward camera cone; holding a target in it for 4 s scores a lock (+10, target −2),
-   using the same rules as the real referee. Purely decorative and self-contained. */
-(() => {
-  const cv = document.getElementById('arena'), ctx = cv.getContext('2d');
-  const W = cv.width, H = cv.height, R = 10;                // px per "10 m"
-  const teams = [
-    { name:'Kartal',  color:'#2f6fde' }, { name:'Şimşek', color:'#c2412d' },
-    { name:'Doğan',   color:'#2e8b57' }, { name:'Martı',  color:'#c98a12' } ];
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-  const ac = teams.map((t, i) => ({ ...t, i, score:0, x: W*(.2+.6*Math.random()), y: H*(.2+.6*Math.random()),
-     h: Math.random()*6.283, v: 1.6 + Math.random()*.5, hunter: i % 2 === 0, target: null, hold:0, trail:[] }));
-  const board = document.getElementById('board'), feed = document.getElementById('feed');
-  const clockEl = document.getElementById('clock');
-  let t = 0, lines = [];
-  const log = (s, cls) => { const m = String(Math.floor(t/60)).padStart(2,'0')+':'+String(Math.floor(t%60)).padStart(2,'0');
-    lines.unshift(`<div class="${cls||''}">${m}  ${s}</div>`); lines = lines.slice(0,3); feed.innerHTML = lines.join(''); };
-  const drawBoard = () => board.innerHTML = ac.map(a =>
-    `<div><span class="sw" style="background:${a.color}"></span>${a.name}<b>${a.score}</b></div>`).join('');
-  drawBoard(); log('Match started · 4 teams airborne');
-
-  const ang = (a) => Math.atan2(Math.sin(a), Math.cos(a));
-  const FOV = 0.38, RANGE = 150;
-
-  function step(dt) {
-    t += dt;
-    for (const a of ac) {
-      // pick nearest other as target (hunters) or wander (patrol)
-      let desired;
-      if (a.hunter) {
-        let best = null, bd = 1e9;
-        for (const b of ac) if (b !== a) { const d = Math.hypot(b.x-a.x, b.y-a.y); if (d < bd) { bd = d; best = b; } }
-        a.target = best;
-        desired = Math.atan2(best.y - a.y, best.x - a.x);
-      } else {
-        desired = a.h + Math.sin(t*0.6 + a.i) * 0.9;
-      }
-      // geofence: steer back toward centre near edges
-      const m = 50; if (a.x < m || a.x > W-m || a.y < m || a.y > H-m) desired = Math.atan2(H/2 - a.y, W/2 - a.x);
-      const turn = Math.max(-0.045, Math.min(0.045, ang(desired - a.h)));   // bank-limited turn rate
-      a.h += turn * dt * 60;
-      a.x += Math.cos(a.h) * a.v * dt * 60; a.y += Math.sin(a.h) * a.v * dt * 60;
-      a.trail.push([a.x, a.y]); if (a.trail.length > 70) a.trail.shift();
-    }
-    // lock-on check (hunters only, target must stay in cone 4 s)
-    for (const a of ac) {
-      if (!a.hunter || !a.target) continue;
-      const b = a.target, d = Math.hypot(b.x-a.x, b.y-a.y), off = Math.abs(ang(Math.atan2(b.y-a.y, b.x-a.x) - a.h));
-      if (d < RANGE && off < FOV) { a.hold += dt; if (a.hold >= 4) { a.score += 10; b.score -= 2; a.hold = 0;
-          log(`${a.name} lock on ${b.name}  +10`, 'pos'); drawBoard(); a.v = 1.4 + Math.random()*.6; } }
-      else if (a.hold > 0) { a.hold = Math.max(0, a.hold - dt*3); }
-    }
-    // occasional role swap keeps it lively (evasion matters too)
-    if (Math.random() < dt * 0.04) { const a = ac[Math.floor(Math.random()*4)]; a.hunter = !a.hunter; a.hold = 0;
-      log(`${a.name} → ${a.hunter ? 'attack' : 'evade'}`); }
-    clockEl.textContent = String(Math.floor(t/60)).padStart(2,'0')+':'+String(Math.floor(t%60)).padStart(2,'0');
-  }
-
-  function draw() {
-    const line = css('--line'), quiet = css('--quiet');
-    ctx.clearRect(0,0,W,H);
-    // grid
-    ctx.strokeStyle = line; ctx.lineWidth = 1; ctx.globalAlpha = .6;
-    for (let x = 0; x <= W; x += 64) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
-    for (let y = 0; y <= H; y += 64) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
-    ctx.globalAlpha = 1;
-    // geofence + QR target
-    ctx.setLineDash([6,6]); ctx.strokeStyle = quiet; ctx.strokeRect(30,30,W-60,H-60); ctx.setLineDash([]);
-    ctx.fillStyle = quiet; ctx.font = '11px ui-monospace, monospace'; ctx.fillText('GEOFENCE', 36, 46);
-    ctx.strokeStyle = quiet; ctx.strokeRect(W/2-9, H/2-9, 18, 18); ctx.fillText('QR', W/2-7, H/2+24);
-    for (const a of ac) {
-      // trail
-      ctx.strokeStyle = a.color; ctx.globalAlpha = .35; ctx.lineWidth = 2; ctx.beginPath();
-      a.trail.forEach(([x,y],k) => k ? ctx.lineTo(x,y) : ctx.moveTo(x,y)); ctx.stroke(); ctx.globalAlpha = 1;
-      // camera cone
-      if (a.hunter) {
-        ctx.fillStyle = a.color; ctx.globalAlpha = a.hold > 0 ? .10 + .25*(a.hold/4) : .07;
-        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.arc(a.x,a.y,RANGE,a.h-FOV,a.h+FOV); ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
-        if (a.hold > 0 && a.target) { // lock progress ring on target
-          ctx.strokeStyle = a.color; ctx.lineWidth = 2.5; ctx.beginPath();
-          ctx.arc(a.target.x, a.target.y, 14, -1.571, -1.571 + 6.283*(a.hold/4)); ctx.stroke(); }
-      }
-      // aircraft glyph
-      ctx.save(); ctx.translate(a.x,a.y); ctx.rotate(a.h); ctx.fillStyle = a.color;
-      ctx.beginPath(); ctx.moveTo(9,0); ctx.lineTo(-6,-8); ctx.lineTo(-3,0); ctx.lineTo(-6,8); ctx.closePath(); ctx.fill();
-      ctx.restore();
-    }
-  }
-
-  let last = performance.now();
-  function frame(now) { const dt = Math.min(.05, (now-last)/1000); last = now; step(dt); draw(); requestAnimationFrame(frame); }
-  if (reduce) { for (let k = 0; k < 400; k++) step(1/30); draw(); } else requestAnimationFrame(frame);
-})();
-</script>
+<script>window.ARENA_TEXT = {"start": "Match started · 4 teams airborne", "lock": "{a} lock on {b}  +10", "attack": "attack", "evade": "evade"};</script>
+<script src="assets/arena.js"></script>
 </body>
 </html>
