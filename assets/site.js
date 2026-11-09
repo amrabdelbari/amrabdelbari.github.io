@@ -19,3 +19,14 @@
   }), { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 })();
+
+/* Experience filter */
+(() => {
+  const bar = document.querySelector('.xfilter'); if (!bar) return;
+  bar.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    bar.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    const f = b.dataset.f;
+    document.querySelectorAll('.xi').forEach(li => li.classList.toggle('hide', f !== 'all' && li.dataset.track !== f));
+  });
+})();

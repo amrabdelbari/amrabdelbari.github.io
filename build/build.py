@@ -10,6 +10,7 @@ import json, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from i18n import LANGS
 from graphics import icon, ART
+from experience import ROLES, CERTS, SKILLS, TEXT as XT, duration, date_range
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://amrabdelbari.github.io"
@@ -91,6 +92,37 @@ def pub_html(L):
     return "\n      ".join(out)
 
 
+MARKS = {"Near East University": "NEU", "جامعة الشرق الأدنى": "NEU", "Yakın Doğu Üniversitesi": "YDÜ",
+         "RoboLabs": "RL", "Oxyinance Technologies": "OX", "Course Khana": "CK",
+         "Construction project": "QA", "مشروع إنشائي": "QA", "İnşaat projesi": "QA",
+         "Synergy Sohag Center": "SY", "مركز سينرجي سوهاج": "SY"}
+
+
+def experience_html(code, L):
+    X = XT[code]
+    o = [f'<div class="xsum">' + "".join(f'<div><b data-count>{n}</b><span>{t}</span></div>' for n, t in X["summary"]) + "</div>"]
+    o.append('<div class="xfilter" role="group">' + "".join(
+        f'<button type="button" data-f="{k}"' + (' aria-pressed="true"' if k == "all" else ' aria-pressed="false"') + f'>{v}</button>'
+        for k, v in X["tracks"].items()) + "</div>")
+    o.append('<ol class="xp">')
+    for r in ROLES:
+        title, org, place, bullets = r[code]
+        o.append(
+            f'<li class="xi t-{r["track"]}' + (" ongoing" if r["end"] is None else "") + f'" data-track="{r["track"]}">'
+            f'<div class="xd"><b>{date_range(code, r["start"], r["end"])}</b><span>{duration(code, r["start"], r["end"])}</span></div>'
+            f'<div class="panel xc"><div class="xh"><span class="mark">{MARKS.get(org, org[:2].upper())}</span>'
+            f'<div><span class="xt">{X["tracks"][r["track"]]}</span><h3>{title}</h3><div class="xo">{org} · {place}</div></div></div>'
+            '<ul class="feat">' + "".join(f"<li>{b}</li>" for b in bullets) + "</ul>"
+            '<div class="tags">' + "".join(f'<span class="tag">{t}</span>' for t in r["tags"]) + "</div></div></li>")
+    o.append("</ol>")
+    certs = "".join(f'<li><b>{y}</b><span lang="en">{n}</span><i lang="en">{w}</i></li>' for y, n, w in CERTS)
+    skills = "".join(f'<div class="sk"><span>{n} <i>{X["skill_levels"][lv]}</i></span><div class="skbar"><div style="width:{lv*20}%"></div></div></div>' for n, lv in SKILLS)
+    langs = "".join(f'<li><b>{n}</b> · {lv}</li>' for n, lv in X["languages"])
+    o.append(f'<div class="two xextra"><div class="panel"><h3>{X["certs"]}</h3><ul class="certs">{certs}</ul></div>'
+             f'<div class="panel"><h3>{X["skills"]}</h3>{skills}<h3 style="margin-top:18px">{X["langs"]}</h3><ul class="edu">{langs}</ul></div></div>')
+    return "\n    ".join(o)
+
+
 def profiles(L, hl):
     items = [("scholar", "Google Scholar"), ("linkedin", "LinkedIn"), ("orcid", "ORCID"),
              ("neu", L["neu_page"]), ("github", "GitHub")]
@@ -128,7 +160,6 @@ def render(code, L):
         for k, t, u in [("linkedin", "LinkedIn", LINKS["linkedin"]), ("scholar", "Google Scholar", LINKS["scholar"].format(hl=hl)),
                         ("github", "GitHub", LINKS["github"]), ("orcid", "ORCID", LINKS["orcid"]), ("neu", L["neu_page"], LINKS["neu"])])
     band = "".join(f'<div><b data-count>{n}</b><span>{t}</span></div>' for n, t in L["band"])
-    timeline = "".join(f'<div class="tl"><b>{y}</b><h4>{h}</h4><p>{p}</p></div>' for y, h, p in L["timeline"])
 
     return f"""<!doctype html>
 <html lang="{code}" dir="{L['dir']}">
@@ -156,6 +187,7 @@ def render(code, L):
     <span class="pill good opt-pill" title="{L['otw_title']}">● {L['otw']}</span>
     <nav>
       <a href="#arena-project" class="opt">{L['nav_arena']}</a>
+      <a href="#experience" class="opt">{XT[code]['nav']}</a>
       <a href="#projects" class="opt">{L['nav_projects']}</a>
       <a href="#research">{L['nav_research']}</a>
       <a href="#about" class="opt">{L['nav_about']}</a>
@@ -224,15 +256,20 @@ guests                          ──/watch▶  3D live view (10 s delay)</div>
     <div class="lessons">{lessons}</div>
   </section>
 
+  <section class="block reveal" id="experience">
+    <div class="sec-head"><span class="num">02</span><h2>{XT[code]['title']}</h2><p>{XT[code]['sub']}</p></div>
+    {experience_html(code, L)}
+  </section>
+
   <section class="block reveal" id="projects">
-    <div class="sec-head"><span class="num">02</span><h2>{L['proj_title']}</h2><p>{L['proj_sub']}</p></div>
+    <div class="sec-head"><span class="num">03</span><h2>{L['proj_title']}</h2><p>{L['proj_sub']}</p></div>
     <div class="grid">
       {"".join(cards)}
     </div>
   </section>
 
   <section class="block reveal" id="research">
-    <div class="sec-head"><span class="num">03</span><h2>{L['res_title']}</h2><p>{L['res_sub']}</p></div>
+    <div class="sec-head"><span class="num">04</span><h2>{L['res_title']}</h2><p>{L['res_sub']}</p></div>
     <div class="rtop one">
       <div class="panel">
         <div class="big3"><div><b data-count>{len(PUBS['journal'])}</b><span>{L['pub_journal']}</span></div><div><b data-count>{len(PUBS['conf'])}</b><span>{L['pub_conf']}</span></div><div><b data-count>{len(PUBS['thesis'])}</b><span>{L['pub_thesis']}</span></div></div>
@@ -243,8 +280,7 @@ guests                          ──/watch▶  3D live view (10 s delay)</div>
   </section>
 
   <section class="block reveal" id="about">
-    <div class="sec-head"><span class="num">04</span><h2>{L['about_title']}</h2><p>{L['journey_title']}</p></div>
-    <div class="timeline">{timeline}</div>
+    <div class="sec-head"><span class="num">05</span><h2>{L['about_title']}</h2></div>
     <div class="two">
       <div class="panel">
         <h3>{L['bg_title']}</h3>
