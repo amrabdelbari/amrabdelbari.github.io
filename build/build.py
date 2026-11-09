@@ -20,6 +20,7 @@ LINKS = {
     "neu":      "https://aif.neu.edu.tr/staff/amr-abdelbari/",
     "orcid":    "https://orcid.org/0000-0002-5861-7762",
     "github":   "https://github.com/amro2021",
+    "arena":    "https://uavarena.github.io/",
 }
 
 ME = "A. Abdelbari"
@@ -177,6 +178,7 @@ def render(code, L):
       <p class="lede">{L['lede']}</p>
       <div class="cta">
         <a class="btn primary" href="#arena-project">{L['cta_arena']}</a>
+        <a class="btn" href="{LINKS['arena']}" {EXT}>{L['visit_arena']} ↗</a>
         <a class="btn" href="#research">{L['cta_research']}</a>
       </div>
       <div class="contactbar" id="contact">
@@ -202,6 +204,7 @@ def render(code, L):
       <div class="panel">
         <h3>{L['arena_h3']}</h3>
         <p>{L['arena_p']}</p>
+        <p><a class="btn primary" href="{LINKS['arena']}" {EXT}>{L['visit_arena']} · uavarena.github.io ↗</a></p>
         <div class="tags">{tags}</div>
         <ul class="feat">{feats}</ul>
 <div class="arch">visiting team laptop                 host (Ubuntu)

@@ -304,6 +304,7 @@ AR["arena_js"] = dict(start="بدأت المباراة · 4 فرق في الجو
 
 
 EN.update(
+    visit_arena="Open the live Arena",
     email_me="Email me", contact_label="Get in touch",
     band=[("13", "peer-reviewed papers"), ("100", "teams in one UAV arena match"),
           ("12+", "years building hardware and software"), ("20+", "students field-testing QR Lab")],
@@ -322,6 +323,7 @@ EN.update(
 )
 
 AR.update(
+    visit_arena="افتح الساحة مباشرة",
     email_me="راسلني", contact_label="تواصل معي",
     band=[("13", "ورقة علمية محكّمة"), ("100", "فريق في مباراة واحدة بساحة المسيّرات"),
           ("12+", "عامًا في بناء العتاد والبرمجيات"), ("20+", "طالبًا جرّبوا QR Lab ميدانيًا")],
@@ -340,6 +342,7 @@ AR.update(
 )
 
 TR.update(
+    visit_arena="Arena'yı canlı aç",
     email_me="E-posta gönder", contact_label="İletişime geçin",
     band=[("13", "hakemli yayın"), ("100", "takım tek bir İHA arena maçında"),
           ("12+", "yıl donanım ve yazılım geliştirme"), ("20+", "öğrenci QR Lab'i sahada denedi")],

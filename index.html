@@ -49,6 +49,7 @@
       <p class="lede">Assistant Professor and <strong>Head of Information Systems Engineering</strong> at Near East University, with an electrical-engineering background. I build <strong>UAV competition simulators</strong> on real autopilots, <strong>passive radar</strong> from SDR and FPGA hardware, and research <strong>NOMA / MIMO</strong> wireless links.</p>
       <div class="cta">
         <a class="btn primary" href="#arena-project">See the UAV Arena →</a>
+        <a class="btn" href="https://uavarena.github.io/" target="_blank" rel="noopener">Open the live Arena ↗</a>
         <a class="btn" href="#research">Publications</a>
       </div>
       <div class="contactbar" id="contact">
@@ -74,6 +75,7 @@
       <div class="panel">
         <h3>A virtual Fighting UAV competition, run on real ArduPilot autopilots.</h3>
         <p>A competition platform for fixed-wing UAV teams, modelled on the TEKNOFEST Fighting UAV format. Teams score by holding an opponent in their camera's hit zone, finishing a QR dive task, avoiding penalties and landing safely. Every aircraft is a real <b>ArduPlane SITL</b> autopilot, flown by the team's own code or by hand from a <b>3D browser cockpit</b>, and an <b>automatic referee</b> scores every match from ground truth. Guests watch in 3D from one link.</p>
+        <p><a class="btn primary" href="https://uavarena.github.io/" target="_blank" rel="noopener">Open the live Arena · uavarena.github.io ↗</a></p>
         <div class="tags"><span class="tag">Python</span><span class="tag">ArduPilot SITL</span><span class="tag">PX4</span><span class="tag">MAVLink</span><span class="tag">ROS 2</span><span class="tag">Gazebo</span><span class="tag">FastAPI / uvicorn</span><span class="tag">NumPy</span><span class="tag">WebGL cockpit</span><span class="tag">GitHub Actions</span></div>
         <ul class="feat"><li><b>Referee engine</b>: lock-on validation (≥ 4 s window, ≥ 90 % in-zone, no gap &gt; 0.3 s), geofence, telemetry watchdog, false-claim and collision penalties, warn / freeze / eject.</li><li><b>Four rulebooks</b>: standard, TEKNOFEST mode, a defence scenario, and a standalone league.</li><li><b>League mode</b>: fog of war, ground radar, hidden SAM sites, GPS and comms jamming, on-board ECM, and an unattended season runner that publishes standings and 3D replays.</li><li><b>Per-aircraft camera images</b> streamed to each team, with recorded evidence clips for every lock-on review.</li><li><b>Fair play</b>: per-team tokens, rate limits, server-side time, and an isolated MAVLink port for each team.</li><li><b>Multi-autopilot</b>: ArduPilot and PX4 airframes, homologated before a match, spread across several computers.</li></ul>
 <div class="arch">visiting team laptop                 host (Ubuntu)
