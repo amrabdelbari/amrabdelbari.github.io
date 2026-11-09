@@ -250,3 +250,7 @@ html.js .reveal.in { opacity:1; transform:none; }
 .contactbar .mails .mail { margin:0; overflow-wrap:anywhere; }
 .contactbar .mail2 { font-size:13px; color:var(--quiet); direction:ltr; }
 [dir="rtl"] .contactbar .mails { align-items:flex-end; }
+.rtop.one { grid-template-columns:1fr; }
+.rtop.one .panel { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; align-items:center; }
+.rtop.one .big3 { margin:0; }
+@media (max-width:860px){ .rtop.one .panel { grid-template-columns:1fr; } }

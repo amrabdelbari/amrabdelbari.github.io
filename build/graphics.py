@@ -1,4 +1,4 @@
-"""Inline SVG: contact icons, animated project illustrations (SMIL) and the publications chart."""
+"""Inline SVG: contact icons, and animated project illustrations (SMIL)."""
 import math, random
 
 ICONS = {
@@ -126,31 +126,3 @@ def ecg():
 
 ART = {"radar": radar, "qr": qr, "p2p": p2p, "track": track, "npu": npu, "ecg": ecg}
 
-
-def chart(pubs):
-    years = list(range(2019, 2026))
-    J = {y: sum(1 for p in pubs["journal"] if p[0] == y) for y in years}
-    C = {y: sum(1 for p in pubs["conf"] if p[0] == y) for y in years}
-    W, H, top, bot, left = 480, 200, 14, 26, 10
-    mx = max(J[y] + C[y] for y in years) or 1
-    unit = (H - top - bot) / mx
-    bw = (W - left * 2) / len(years)
-    out = [f'<svg class="chart" viewBox="0 0 {W} {H}" role="img" aria-label="Publications per year" dir="ltr">']
-    for k in range(mx + 1):
-        y = H - bot - k * unit
-        out.append(f'<line x1="0" x2="{W}" y1="{y:.1f}" y2="{y:.1f}" stroke="var(--line)" stroke-dasharray="{"0" if k == 0 else "2 4"}"/>')
-    for i, yr in enumerate(years):
-        x = left + i * bw + bw * 0.22
-        w = bw * 0.56
-        yb = H - bot
-        hj, hc = J[yr] * unit, C[yr] * unit
-        if hc:
-            out.append(f'<rect class="bar" x="{x:.1f}" y="{yb-hj-hc:.1f}" width="{w:.1f}" height="{hc:.1f}" rx="4" fill="color-mix(in srgb, var(--accent) 40%, var(--panel))" style="transition-delay:{i*80+120}ms"/>')
-        if hj:
-            out.append(f'<rect class="bar" x="{x:.1f}" y="{yb-hj:.1f}" width="{w:.1f}" height="{hj:.1f}" rx="4" fill="var(--accent)" style="transition-delay:{i*80}ms"/>')
-        tot = J[yr] + C[yr]
-        if tot:
-            out.append(f'<text class="v" x="{x+w/2:.1f}" y="{yb-hj-hc-6:.1f}" text-anchor="middle">{tot}</text>')
-        out.append(f'<text x="{x+w/2:.1f}" y="{H-8}" text-anchor="middle">{yr}</text>')
-    out.append("</svg>")
-    return "".join(out)

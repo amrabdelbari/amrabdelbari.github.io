@@ -9,7 +9,7 @@ Edit text in build/i18n.py, publications in PUBS below, then re-run and commit t
 import json, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from i18n import LANGS
-from graphics import icon, ART, chart
+from graphics import icon, ART
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://amrabdelbari.github.io"
@@ -233,9 +233,7 @@ guests                          ──/watch▶  3D live view (10 s delay)</div>
 
   <section class="block reveal" id="research">
     <div class="sec-head"><span class="num">03</span><h2>{L['res_title']}</h2><p>{L['res_sub']}</p></div>
-    <div class="rtop">
-      <div class="panel"><div class="h">{L['chart_title']}</div>{chart(PUBS)}
-        <div class="legend"><span><span class="sw" style="background:var(--accent)"></span>{L['pub_journal']}</span><span><span class="sw" style="background:color-mix(in srgb, var(--accent) 40%, var(--panel))"></span>{L['pub_conf']}</span></div></div>
+    <div class="rtop one">
       <div class="panel">
         <div class="big3"><div><b data-count>{len(PUBS['journal'])}</b><span>{L['pub_journal']}</span></div><div><b data-count>{len(PUBS['conf'])}</b><span>{L['pub_conf']}</span></div><div><b data-count>{len(PUBS['thesis'])}</b><span>{L['pub_thesis']}</span></div></div>
         <div class="profiles">{profiles(L, hl)}</div>
