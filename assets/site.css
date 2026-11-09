@@ -246,3 +246,7 @@ html.js .reveal.in { opacity:1; transform:none; }
 .band b, .big3 b { direction:ltr; unicode-bidi:isolate; }
 [dir="rtl"] .band b { text-align:right; }
 :lang(ar) .contactbar .lbl { letter-spacing:0; font-family:system-ui, "Segoe UI", Tahoma, sans-serif; font-size:13px; }
+.contactbar .mails { display:flex; flex-direction:column; gap:2px; margin-inline-end:auto; min-width:0; }
+.contactbar .mails .mail { margin:0; overflow-wrap:anywhere; }
+.contactbar .mail2 { font-size:13px; color:var(--quiet); direction:ltr; }
+[dir="rtl"] .contactbar .mails { align-items:flex-end; }

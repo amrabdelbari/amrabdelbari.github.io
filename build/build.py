@@ -160,7 +160,7 @@ def render(code, L):
       <a href="#about" class="opt">{L['nav_about']}</a>
       <a href="#contact" class="opt">{L['nav_contact']}</a>
     </nav>
-    <a class="btn primary mailbtn opt" href="mailto:amro410@gmail.com">{icon('mail')}{L['email_me']}</a>
+    <a class="btn primary mailbtn opt" href="mailto:amr.abdelbari@neu.edu.tr">{icon('mail')}{L['email_me']}</a>
     <div class="langs" aria-label="Language">{langs}</div>
   </div>
 </header>
@@ -181,7 +181,7 @@ def render(code, L):
       </div>
       <div class="contactbar" id="contact">
         <span class="lbl">{L['contact_label']}</span>
-        <a class="mail" href="mailto:amro410@gmail.com">amro410@gmail.com</a>
+        <span class="mails"><a class="mail" href="mailto:amr.abdelbari@neu.edu.tr">amr.abdelbari@neu.edu.tr</a><a class="mail2" href="mailto:amro410@gmail.com">amro410@gmail.com</a></span>
         {contact_icons}
       </div>
     </div>
@@ -264,7 +264,7 @@ guests                          ──/watch▶  3D live view (10 s delay)</div>
   <div class="wrap">
     <div><b style="color:var(--ink)">{L['name']}</b> · {L['footer_loc']}</div>
     <div class="contact">
-      <a class="btn" href="mailto:amro410@gmail.com">{L['email']}</a>
+      <a class="btn" href="mailto:amr.abdelbari@neu.edu.tr">{L['email']}</a>
       <a class="btn" href="{LINKS['scholar'].format(hl=hl)}" {EXT}>Google Scholar</a>
       <a class="btn" href="{LINKS['linkedin']}" {EXT}>LinkedIn</a>
       <a class="btn" href="{LINKS['github']}" {EXT}>GitHub</a>
