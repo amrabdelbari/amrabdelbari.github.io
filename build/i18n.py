@@ -5,15 +5,15 @@ _GH = "https://github.com/amro2021/"
 def _cards(t):
     """t: dict of per-language strings for the six project cards."""
     return [
-        dict(title=t["pcl_t"], pill=t["research"], pillc="warn", p=t["pcl_p"], tags=["SDR", "FPGA", "DSP", "ADS-B"]),
-        dict(title="QR Lab", pill=t["live"], pillc="good", p=t["qr_p"], tags=["JavaScript", "WebCrypto", "Capacitor"],
+        dict(art="radar", title=t["pcl_t"], pill=t["research"], pillc="warn", p=t["pcl_p"], tags=["SDR", "FPGA", "DSP", "ADS-B"]),
+        dict(art="qr", title="QR Lab", pill=t["live"], pillc="good", p=t["qr_p"], tags=["JavaScript", "WebCrypto", "Capacitor"],
              links=[(t["open"], "https://amro2021.github.io/qr-transfer/"), (t["code"], _GH + "qr-transfer")]),
-        dict(title="MDANetwork", pill=t["prototype"], pillc="acc", p=t["mda_p"], tags=["Python", "P2P", "NAT traversal"],
+        dict(art="p2p", title="MDANetwork", pill=t["prototype"], pillc="acc", p=t["mda_p"], tags=["Python", "P2P", "NAT traversal"],
              links=[(t["code"], _GH + "MDANetPro")]),
-        dict(title="FlyDetectandTrack", pill=t["vision"], pillc="", p=t["fly_p"], tags=["OpenCV", "Kalman", "Tracking"],
+        dict(art="track", title="FlyDetectandTrack", pill=t["vision"], pillc="", p=t["fly_p"], tags=["OpenCV", "Kalman", "Tracking"],
              links=[(t["code"], _GH + "FlyDetectandTrack")]),
-        dict(title=t["npu_t"], pill=t["design"], pillc="warn", p=t["npu_p"], tags=["Verilog", "Nios V", t["quant"]]),
-        dict(title="HomecareBot", pill=t["bot"], pillc="", p=t["home_p"], tags=["Python", "Telegram API"],
+        dict(art="npu", title=t["npu_t"], pill=t["design"], pillc="warn", p=t["npu_p"], tags=["Verilog", "Nios V", t["quant"]]),
+        dict(art="ecg", title="HomecareBot", pill=t["bot"], pillc="", p=t["home_p"], tags=["Python", "Telegram API"],
              links=[(t["code"], _GH + "HomecareBot")]),
     ]
 
@@ -301,5 +301,60 @@ TR = dict(
 
 # Arabic feed: keep the short log lines readable inside the left-to-right feed box.
 AR["arena_js"] = dict(start="بدأت المباراة · 4 فرق في الجو", lock="{a} أقفل على {b}  +10", attack="هجوم", evade="مراوغة")
+
+
+EN.update(
+    email_me="Email me", contact_label="Get in touch",
+    band=[("13", "peer-reviewed papers"), ("100", "teams in one UAV arena match"),
+          ("12+", "years building hardware and software"), ("20+", "students field-testing QR Lab")],
+    chart_title="Publications per year", journey_title="From Sohag to Nicosia",
+    timeline=[
+        ("2014", "BSc, Electrical & Electronics Eng.", "Sohag University, Egypt"),
+        ("2018", "MSc, Electrical & Electronics Eng.", "Near East University"),
+        ("2019", "Research Assistant", "Near East University"),
+        ("2021", "PhD, Electrical & Electronics Eng.", "Near East University"),
+        ("2021", "Co-founder & Quant Developer", "Oxyinance Technologies, Istanbul"),
+        ("2022", "Software Engineer → Head of Software Engineering", "RoboLabs, Istanbul"),
+        ("2023", "Lecturer", "Near East University"),
+        ("2024", "Assistant Professor", "Near East University"),
+        ("2025", "Head of Information Systems Engineering", "Near East University"),
+    ],
+)
+
+AR.update(
+    email_me="راسلني", contact_label="تواصل معي",
+    band=[("13", "ورقة علمية محكّمة"), ("100", "فريق في مباراة واحدة بساحة المسيّرات"),
+          ("12+", "عامًا في بناء العتاد والبرمجيات"), ("20+", "طالبًا جرّبوا QR Lab ميدانيًا")],
+    chart_title="المنشورات حسب السنة", journey_title="من سوهاج إلى نيقوسيا",
+    timeline=[
+        ("2014", "بكالوريوس الهندسة الكهربائية والإلكترونية", "جامعة سوهاج، مصر"),
+        ("2018", "ماجستير الهندسة الكهربائية والإلكترونية", "جامعة الشرق الأدنى"),
+        ("2019", "مساعد باحث", "جامعة الشرق الأدنى"),
+        ("2021", "دكتوراه الهندسة الكهربائية والإلكترونية", "جامعة الشرق الأدنى"),
+        ("2021", "شريك مؤسس ومطوّر كمّي", "Oxyinance Technologies، إسطنبول"),
+        ("2022", "مهندس برمجيات ← رئيس هندسة البرمجيات", "RoboLabs، إسطنبول"),
+        ("2023", "محاضر", "جامعة الشرق الأدنى"),
+        ("2024", "أستاذ مساعد", "جامعة الشرق الأدنى"),
+        ("2025", "رئيس قسم هندسة نظم المعلومات", "جامعة الشرق الأدنى"),
+    ],
+)
+
+TR.update(
+    email_me="E-posta gönder", contact_label="İletişime geçin",
+    band=[("13", "hakemli yayın"), ("100", "takım tek bir İHA arena maçında"),
+          ("12+", "yıl donanım ve yazılım geliştirme"), ("20+", "öğrenci QR Lab'i sahada denedi")],
+    chart_title="Yıllara göre yayınlar", journey_title="Sohag'dan Lefkoşa'ya",
+    timeline=[
+        ("2014", "Lisans, Elektrik ve Elektronik Müh.", "Sohag Üniversitesi, Mısır"),
+        ("2018", "Yüksek Lisans, Elektrik ve Elektronik Müh.", "Yakın Doğu Üniversitesi"),
+        ("2019", "Araştırma Görevlisi", "Yakın Doğu Üniversitesi"),
+        ("2021", "Doktora, Elektrik ve Elektronik Müh.", "Yakın Doğu Üniversitesi"),
+        ("2021", "Kurucu Ortak ve Kantitatif Geliştirici", "Oxyinance Technologies, İstanbul"),
+        ("2022", "Yazılım Mühendisi → Yazılım Mühendisliği Müdürü", "RoboLabs, İstanbul"),
+        ("2023", "Öğretim Görevlisi", "Yakın Doğu Üniversitesi"),
+        ("2024", "Dr. Öğretim Üyesi", "Yakın Doğu Üniversitesi"),
+        ("2025", "Bilişim Sistemleri Mühendisliği Bölüm Başkanı", "Yakın Doğu Üniversitesi"),
+    ],
+)
 
 LANGS = {"en": EN, "ar": AR, "tr": TR}

@@ -12,7 +12,8 @@ The three pages are generated from one template so they stay in sync:
 
 - `build/i18n.py`: all page text, per language
 - `build/build.py`: layout, publication list and profile links
-- `assets/site.css`, `assets/arena.js`: shared styles and the arena animation
+- `build/graphics.py`: icons, animated project illustrations and the publications chart (inline SVG)
+- `assets/site.css`, `assets/arena.js`, `assets/site.js`: shared styles, the arena animation, scroll reveal and count-up
 - `assets/photo.jpg`: profile photo (square, about 400×400 px). Until it exists the page shows initials.
 
 After editing, run `python3 build/build.py` and commit the regenerated HTML.
